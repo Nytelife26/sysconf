@@ -24,6 +24,10 @@ _: {
     };
     nushell = {
       enable = true;
+      settings = {
+        buffer_editor = "nvim";
+        show_banner = false;
+      };
     };
   };
 }
