@@ -48,7 +48,7 @@
     uid = 1000;
     home = "/home/lveneris";
 
-    shell = pkgs.bash;
+    shell = pkgs.nushell;
     isNormalUser = true;
     initialPassword = "changeme";
 

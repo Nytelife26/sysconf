@@ -2,7 +2,7 @@ _: {
   programs = {
     direnv = {
       enable = true;
-      enableBashIntegration = true;
+      enableNushellIntegration = true;
       nix-direnv.enable = true;
     };
 
@@ -17,29 +17,13 @@ _: {
     fd.enable = true;
     bat.enable = true;
     fastfetch.enable = true;
-    bash = {
+
+    carapace = {
       enable = true;
-      enableCompletion = true;
-
-      historyControl = [
-        "ignorespace"
-        "erasedups"
-      ];
-
-      shellOptions = [
-        "histappend"
-        "cmdhist"
-        "lithist"
-        "histreedit"
-        "histverify"
-        "globstar"
-        "direxpand"
-        "cdspell"
-        "checkwinsize"
-        "dotglob"
-        "extglob"
-        "nocasematch"
-      ];
+      enableNushellIntegration = true;
+    };
+    nushell = {
+      enable = true;
     };
   };
 }

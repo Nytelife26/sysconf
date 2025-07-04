@@ -27,6 +27,5 @@
       settings.git_protocol = "ssh";
     };
     gpg.enable = true;
-    nushell.enable = true;
   };
 }
