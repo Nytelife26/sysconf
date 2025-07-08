@@ -94,7 +94,10 @@
         src = ./.;
         hooks = {
           convco.enable = true;
-          alejandra.enable = true;
+          alejandra = {
+            enable = true;
+            package = nixpkgs.legacyPackages.${system}.alejandra;
+          };
           statix = {
             enable = true;
             settings.ignore = ["/.direnv"];
