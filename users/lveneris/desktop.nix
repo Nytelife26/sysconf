@@ -13,8 +13,6 @@
     twemoji-color-font
     nerd-fonts.fira-code
     fira-code-symbols
-    rquickshare
-    libappindicator
   ];
 
   home.sessionVariables = {BROWSER = "chromium";};
@@ -61,6 +59,9 @@
       size = 16;
     };
   };
+
+  services.fnott.enable = true;
+  services.lorri.enableNotifications = true;
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
