@@ -14,6 +14,7 @@ _: {
       ];
     };
 
+    bottom.enable = true;
     ripgrep.enable = true;
     fd.enable = true;
     bat.enable = true;
