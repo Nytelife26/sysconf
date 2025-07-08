@@ -14,17 +14,5 @@
 	in {
 		inherit username;
 		homeDirectory = "/home/${username}";
-		packages =
-			builtins.attrValues {
-				inherit
-					(pkgs)
-					pulseaudio
-					qimgv
-					sd
-					unzip
-					man-pages-posix
-					man-pages
-					;
-			};
 	};
 }

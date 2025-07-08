@@ -1,4 +1,9 @@
-{lib, ...}: {
+{
+	lib,
+	pkgs,
+	...
+}: {
+	home.packages = with pkgs; [sd unzip];
 	services.lorri.enable = true;
 	programs = {
 		direnv = {

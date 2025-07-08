@@ -1,11 +1,5 @@
 {pkgs, ...}: {
-	home.packages =
-		builtins.attrValues {
-			inherit
-				(pkgs)
-				_1password-cli
-				;
-		};
+	home.packages = with pkgs; [_1password-cli];
 	programs = {
 		carapace = {
 			enable = true;

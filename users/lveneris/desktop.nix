@@ -13,6 +13,8 @@
 		twemoji-color-font
 		nerd-fonts.fira-code
 		fira-code-symbols
+		qimgv
+		pulseaudio
 	];
 
 	home.sessionVariables = {BROWSER = "chromium";};
