@@ -59,6 +59,11 @@
 		vim
 		neovim
 		home-manager
+		# Replace as much GNU software as possible
+		(lib.hiPrio pkgs.unstable.uutils-coreutils-noprefix)
+		(lib.hiPrio pkgs.uutils-findutils)
+		# Currently disabled - incomplete:
+		# (lib.hiPrio pkgs.uutils-diffutils)
 	];
 	documentation.nixos.enable = false;
 }
