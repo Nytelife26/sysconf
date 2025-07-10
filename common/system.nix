@@ -1,11 +1,9 @@
 {
 	outputs,
+	lib,
 	pkgs,
 	...
 }: {
-	programs.ssh = {
-	};
-
 	nixpkgs = {
 		config.allowUnfree = true;
 		overlays = [outputs.overlays.unstable-pkgs];
