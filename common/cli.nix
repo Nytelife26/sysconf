@@ -26,6 +26,10 @@
 		bat.enable = true;
 		fastfetch.enable = true;
 
+		carapace = {
+			enable = true;
+			enableNushellIntegration = true;
+		};
 		nushell = {
 			enable = true;
 			settings = {

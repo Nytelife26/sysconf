@@ -1,10 +1,6 @@
 {pkgs, ...}: {
 	home.packages = with pkgs; [_1password-cli];
 	programs = {
-		carapace = {
-			enable = true;
-			enableNushellIntegration = true;
-		};
 		git = {
 			userName = "Nytelife26";
 			userEmail = "xtylerjrx@gmail.com";
