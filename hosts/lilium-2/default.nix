@@ -4,9 +4,9 @@
 	...
 }: {
 	imports = [
-		./audio.nix
 		./hardware.nix
 
+		../../common/audio.nix
 		../../common/system.nix
 	];
 
