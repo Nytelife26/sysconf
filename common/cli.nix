@@ -44,5 +44,35 @@
 					''$"($env.XDG_RUNTIME_DIR)/ssh-agent"'';
 			};
 		};
+		starship = {
+			enable = true;
+			enableNushellIntegration = true;
+			settings = {
+				add_newline = false;
+				format = "$username@\\[$hostname\\] $character$directory($git_branch$git_state )($git_status )";
+				character = {
+					error_symbol = "[»](bold red)";
+					success_symbol = "[»](bold purple)";
+				};
+				directory.style = "bold blue";
+				git_branch.format = "[$symbol$branch(:$remote_branch)]($style)";
+				git_state = {
+					format = "[\\($state( $progress_current/$progress_total)\\)]($style)";
+					style = "bold cyan";
+				};
+				git_status.style = "bold yellow";
+				hostname = {
+					format = "[$hostname]($style)";
+					style = "bold green";
+					ssh_only = false;
+				};
+				username = {
+					format = "[$user]($style)";
+					style_root = "bold red";
+					style_user = "bold white";
+					show_always = true;
+				};
+			};
+		};
 	};
 }
