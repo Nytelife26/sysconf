@@ -143,6 +143,10 @@
 					"${modifier}+Shift+e" = "exec 'swaymsg exit'";
 				};
 		};
+		extraConfig = ''
+			default_dim_inactive 0.2
+			corner_radius 15
+		'';
 	};
 
 	xresources = {
