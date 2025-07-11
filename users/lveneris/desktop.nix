@@ -3,21 +3,31 @@
 	lib,
 	...
 }: {
-	home.packages = with pkgs; [
-		alacritty
-		chromium
-		vesktop
-		wl-clipboard
-		clipman
-		shotman
-		twemoji-color-font
-		nerd-fonts.fira-code
-		fira-code-symbols
-		qimgv
-		pulseaudio
-	];
-
-	home.sessionVariables = {BROWSER = "chromium";};
+	home = {
+		packages = with pkgs; [
+			alacritty
+			chromium
+			vesktop
+			wl-clipboard
+			clipman
+			shotman
+			twitter-color-emoji
+			nerd-fonts.fira-code
+			fira-code-symbols
+			qimgv
+			pulseaudio
+		];
+		sessionVariables = {BROWSER = "chromium";};
+		pointerCursor = {
+			enable = true;
+			name = "catppuccin-mocha-pink-cursors";
+			package = pkgs.catppuccin-cursors.mochaPink;
+			size = 20;
+			dotIcons.enable = true;
+			gtk.enable = true;
+			sway.enable = true;
+		};
+	};
 
 	xdg = {
 		enable = true;
@@ -55,21 +65,15 @@
 			name = "Adwaita-dark";
 			package = pkgs.gnome-themes-extra;
 		};
-		cursorTheme = {
-			name = "mochaDark";
-			package = pkgs.catppuccin-cursors;
-			size = 16;
-		};
 	};
 
-	services.fnott.enable = true;
-	services.lorri.enableNotifications = true;
-
-	dconf.settings = {
-		"org/gnome/desktop/interface" = {
-			color-scheme = "prefer-dark";
-		};
+	services = {
+		fnott.enable = true;
+		lorri.enableNotifications = true;
+		unclutter.enable = true;
 	};
+
+	dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
 	fonts.fontconfig = {
 		enable = true;
@@ -83,6 +87,7 @@
 		enable = true;
 		settings = {
 			window = {
+				opacity = 0.9;
 				decorations = "None";
 				padding = {
 					x = 20;
