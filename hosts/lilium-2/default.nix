@@ -22,9 +22,7 @@
 		};
 	};
 
-	networking = {
-		hostName = "lilium-2";
-	};
+	networking.hostName = "lilium-2";
 
 	security.polkit.enable = true;
 
