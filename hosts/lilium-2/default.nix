@@ -6,6 +6,7 @@
 	imports = [
 		../../common/sys/audio.nix
 		../../common/sys/system.nix
+		../../common/stylix.nix
 
 		./hardware.nix
 	];

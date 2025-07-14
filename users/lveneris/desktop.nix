@@ -6,26 +6,14 @@
 	home = {
 		packages = with pkgs; [
 			alacritty
-			chromium
 			vesktop
 			wl-clipboard
 			clipman
 			shotman
-			twitter-color-emoji
-			nerd-fonts.fira-code
 			fira-code-symbols
 			qimgv
 		];
 		sessionVariables = {BROWSER = "chromium";};
-		pointerCursor = {
-			enable = true;
-			name = "catppuccin-mocha-pink-cursors";
-			package = pkgs.catppuccin-cursors.mochaPink;
-			size = 20;
-			dotIcons.enable = true;
-			gtk.enable = true;
-			sway.enable = true;
-		};
 	};
 
 	xdg = {
@@ -58,46 +46,28 @@
 		};
 	};
 
-	gtk = {
-		enable = true;
-		theme = {
-			name = "Adwaita-dark";
-			package = pkgs.gnome-themes-extra;
-		};
-	};
-
 	services = {
 		fnott.enable = true;
 		lorri.enableNotifications = true;
 		unclutter.enable = true;
 	};
 
-	dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+	# dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-	fonts.fontconfig = {
-		enable = true;
-		defaultFonts = {
-			monospace = ["FiraCode Nerd Font"];
-			emoji = ["Twitter Color Emoji"];
-		};
-	};
-
-	programs.alacritty = {
-		enable = true;
-		settings = {
-			window = {
-				opacity = 0.9;
-				decorations = "None";
-				padding = {
-					x = 20;
-					y = 20;
+	programs = {
+		alacritty = {
+			enable = true;
+			settings = {
+				window = {
+					decorations = "None";
+					padding = {
+						x = 20;
+						y = 20;
+					};
 				};
 			};
-			font = {
-				size = 12;
-				normal = {family = "FiraCode Nerd Font";};
-			};
 		};
+		chromium.enable = true;
 	};
 
 	wayland.windowManager.sway = {
@@ -118,12 +88,6 @@
 					xkb_layout = "gb";
 					tap = "enabled";
 					natural_scroll = "enabled";
-				};
-			};
-			output = {
-				"*" = {
-					bg = "${pkgs.nixos-artwork.wallpapers.catppuccin-mocha.src} fill";
-					# bg = "#000000 solid_color";
 				};
 			};
 			gaps = {
@@ -148,9 +112,9 @@
 		'';
 	};
 
-	xresources = {
-		path = "$HOME/.Xdefaults";
-		# TODO: colours
-		properties = {};
-	};
+	# xresources = {
+	# 	path = "$HOME/.Xdefaults";
+	# 	# TODO: colours
+	# 	properties = {};
+	# };
 }

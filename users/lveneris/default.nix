@@ -3,6 +3,7 @@
 		../../common/hm/home.nix
 		../../common/hm/cli.nix
 		../../common/neovim
+		../../common/stylix.nix
 
 		./terminal.nix
 		./ssh.nix

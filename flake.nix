@@ -26,6 +26,11 @@
 			url = "github:nix-community/nixvim/nixos-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		stylix = {
+			url = "github:nix-community/stylix/release-25.05";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
 	outputs = {
@@ -36,6 +41,7 @@
 		hooks,
 		lanzaboote,
 		vim,
+		stylix,
 		nixpkgs,
 		nixpkgs-unstable,
 		...
@@ -73,6 +79,8 @@
 				[
 					disko.nixosModules.disko
 					lanzaboote.nixosModules.lanzaboote
+					# This is required because Chromium cannot be configured by home-manager
+					stylix.nixosModules.stylix
 					hardware.nixosModules.common-pc-laptop
 					hardware.nixosModules.common-cpu-intel
 					hardware.nixosModules.common-pc-ssd
@@ -84,7 +92,10 @@
 		homeConfigurations = {
 			"lveneris@lilium-2" =
 				mkHome "lveneris" "x86_64-linux"
-				[vim.homeManagerModules.nixvim];
+				[
+					vim.homeManagerModules.nixvim
+					stylix.homeModules.stylix
+				];
 		};
 
 		checks =
