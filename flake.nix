@@ -5,7 +5,11 @@
 		nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 		nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 		hardware.url = "github:NixOS/nixos-hardware";
-		hooks.url = "github:cachix/git-hooks.nix";
+
+		hooks = {
+			url = "github:cachix/git-hooks.nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 		home-manager = {
 			url = "github:nix-community/home-manager/release-25.05";
