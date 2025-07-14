@@ -4,10 +4,10 @@
 	...
 }: {
 	imports = [
-		./hardware.nix
+		../../common/sys/audio.nix
+		../../common/sys/system.nix
 
-		../../common/audio.nix
-		../../common/system.nix
+		./hardware.nix
 	];
 
 	boot = {

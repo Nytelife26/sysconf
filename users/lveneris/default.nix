@@ -1,7 +1,7 @@
 {pkgs, ...}: {
 	imports = [
-		../../common/home.nix
-		../../common/cli.nix
+		../../common/hm/home.nix
+		../../common/hm/cli.nix
 		../../common/neovim
 
 		./terminal.nix
