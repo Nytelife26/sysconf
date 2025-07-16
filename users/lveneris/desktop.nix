@@ -5,7 +5,6 @@
 }: {
 	home = {
 		packages = with pkgs; [
-			alacritty
 			vesktop
 			wl-clipboard
 			clipman
