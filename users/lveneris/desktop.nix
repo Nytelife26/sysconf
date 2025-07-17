@@ -12,7 +12,10 @@
 			fira-code-symbols
 			qimgv
 		];
-		sessionVariables = {BROWSER = "chromium";};
+		sessionVariables = {
+			BROWSER = "chromium";
+			NIXOS_OZONE_WL = 1;
+		};
 	};
 
 	xdg = {
