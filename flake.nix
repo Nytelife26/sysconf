@@ -35,6 +35,12 @@
 			url = "github:nix-community/stylix/release-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		swayalt = {
+			url = "github:nytelife26/swayalt-rs";
+			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.hooks.follows = "hooks";
+		};
 	};
 
 	outputs = {

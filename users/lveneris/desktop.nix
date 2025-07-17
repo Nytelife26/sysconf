@@ -11,6 +11,7 @@
 			shotman
 			fira-code-symbols
 			qimgv
+			swayalt
 		];
 		sessionVariables = {
 			BROWSER = "chromium";
@@ -95,6 +96,7 @@
 			gaps = {
 				inner = 20;
 			};
+			startup = [{command = "--no-startup-id ${pkgs.swayalt}/bin/swayalt";}];
 			keybindings =
 				lib.mkOptionDefault {
 					# Brightness

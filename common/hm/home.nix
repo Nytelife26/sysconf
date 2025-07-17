@@ -4,7 +4,7 @@
 			allowUnfree = true;
 			allowUnfreePredicate = _: true;
 		};
-		overlays = [outputs.overlays.unstable-pkgs];
+		overlays = [outputs.overlays.unstable-pkgs outputs.overlays.swayalt];
 	};
 
 	programs = {
