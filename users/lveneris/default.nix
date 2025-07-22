@@ -4,6 +4,7 @@
 		../../common/hm/cli.nix
 		../../common/neovim
 		../../common/stylix.nix
+		../../common/hm/stylix.nix
 
 		./terminal.nix
 		./ssh.nix
