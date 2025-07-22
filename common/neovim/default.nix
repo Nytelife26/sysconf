@@ -29,7 +29,7 @@
 			Normal.bg = "none";
 			NormalNC.bg = "none";
 			LineNr = {
-				fg = "grey";
+				fg = "lightgrey";
 				bold = true;
 			};
 			LineNrAbove.fg = "grey";
