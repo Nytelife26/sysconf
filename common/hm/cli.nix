@@ -38,14 +38,14 @@
 				show_banner = false;
 			};
 			environmentVariables =
-				{
+				config.home.sessionVariables
+				// {
 					# TODO: read this and other entries from `environment.extraInit`
 					# this is currently dependent on the value set by `programs.ssh.startAgent`
 					SSH_AUTH_SOCK =
 						lib.hm.nushell.mkNushellInline
 						''$"($env.XDG_RUNTIME_DIR)/ssh-agent"'';
-				}
-				// config.home.sessionVariables;
+				};
 		};
 		starship = {
 			enable = true;
