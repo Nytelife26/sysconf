@@ -115,10 +115,4 @@
 			corner_radius 15
 		'';
 	};
-
-	# xresources = {
-	# 	path = "$HOME/.Xdefaults";
-	# 	# TODO: colours
-	# 	properties = {};
-	# };
 }
