@@ -76,7 +76,7 @@
 								"@swap" = {
 									mountpoint = "/swap";
 									inherit mountOptions;
-									swap.swapfile.size = "20G";
+									swap.swapfile.size = "4G";
 								};
 								"@nix" = {
 									mountpoint = "/nix";
