@@ -8,9 +8,12 @@
 		config.allowUnfree = true;
 		overlays = [outputs.overlays.unstable-pkgs];
 	};
-	nix.settings = {
-		experimental-features = "nix-command flakes";
-		auto-optimise-store = true;
+	nix = {
+		channel.enable = false;
+		settings = {
+			experimental-features = "nix-command flakes";
+			auto-optimise-store = true;
+		};
 	};
 
 	i18n.defaultLocale = "en_GB.UTF-8";
