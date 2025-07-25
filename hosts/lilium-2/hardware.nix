@@ -29,8 +29,6 @@
 
 			# NOTE: this is required for tpm2 on boot
 			systemd.enable = true;
-
-			luks.devices."root".device = "/dev/disk/by-partlabel/root";
 		};
 
 		kernelModules = ["kvm-intel"];
@@ -41,45 +39,64 @@
 	hardware.graphics.enable = true;
 	security.tpm2.enable = true;
 
-	fileSystems = {
-		"/" = {
-			device = "/dev/mapper/root";
-			fsType = "btrfs";
-			options = ["defaults" "x-mount.mkdir" "ssd" "compress=zstd" "subvol=@root"];
-		};
-		"/boot" = {
-			device = "/dev/disk/by-partlabel/boot";
-			fsType = "vfat";
-			options = ["umask=0077"];
-		};
-		"/swap" = {
-			device = "/dev/mapper/root";
-			fsType = "btrfs";
-			options = ["defaults" "x-mount.mkdir" "ssd" "compress=zstd" "noatime" "subvol=@swap"];
-		};
-		"/nix" = {
-			device = "/dev/mapper/root";
-			fsType = "btrfs";
-			options = ["defaults" "x-mount.mkdir" "ssd" "compress=zstd" "noatime" "subvol=@nix"];
-		};
-		"/.snapshots" = {
-			device = "/dev/mapper/root";
-			fsType = "btrfs";
-			options = ["defaults" "x-mount.mkdir" "ssd" "compress=zstd" "subvol=@snapshots"];
-		};
-		"/home" = {
-			device = "/dev/mapper/root";
-			fsType = "btrfs";
-			options = ["defaults" "x-mount.mkdir" "ssd" "compress=zstd" "subvol=@home"];
+	disko.devices.disk.main = let
+		mountOptions = ["defaults" "x-mount.mkdir" "ssd" "compress=zstd" "noatime"];
+	in {
+		type = "disk";
+		device = "/dev/nvme0n1";
+		content = {
+			type = "gpt";
+			partitions = {
+				boot = {
+					size = "1G";
+					type = "EF00";
+					device = "/dev/disk/by-partlabel/boot";
+					content = {
+						type = "filesystem";
+						format = "vfat";
+						mountpoint = "/boot";
+						mountOptions = ["umask=0077"];
+					};
+				};
+				root = {
+					size = "100%";
+					device = "/dev/disk/by-partlabel/root";
+					content = {
+						type = "luks";
+						name = "root";
+						settings = {};
+						content = {
+							type = "btrfs";
+							extraArgs = ["-f"];
+							subvolumes = {
+								"@root" = {
+									mountpoint = "/";
+									inherit mountOptions;
+								};
+								"@swap" = {
+									mountpoint = "/swap";
+									inherit mountOptions;
+									swap.swapfile.size = "20G";
+								};
+								"@nix" = {
+									mountpoint = "/nix";
+									inherit mountOptions;
+								};
+								"@snapshots" = {
+									mountpoint = "/.snapshots";
+									inherit mountOptions;
+								};
+								"@home" = {
+									mountpoint = "/home";
+									inherit mountOptions;
+								};
+							};
+						};
+					};
+				};
+			};
 		};
 	};
-
-	swapDevices = [
-		{
-			device = "/swap/swapfile";
-			size = 20 * 1024;
-		}
-	];
 
 	# Enables DHCP on each ethernet and wireless interface. In case of scripted networking
 	# (the default) this is the recommended approach. When using systemd-networkd it's
