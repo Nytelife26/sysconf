@@ -8,17 +8,9 @@
 		config.allowUnfree = true;
 		overlays = [outputs.overlays.unstable-pkgs];
 	};
-	nix = {
-		settings = {
-			experimental-features = "nix-command flakes";
-			auto-optimise-store = true;
-		};
-
-		gc = {
-			automatic = true;
-			dates = "monthly";
-			options = "--delete-older-than 30d";
-		};
+	nix.settings = {
+		experimental-features = "nix-command flakes";
+		auto-optimise-store = true;
 	};
 
 	i18n.defaultLocale = "en_GB.UTF-8";
@@ -46,6 +38,13 @@
 			};
 		};
 		nano.enable = false;
+		nh = {
+			enable = true;
+			clean = {
+				enable = true;
+				extraArgs = "--keep-since 7d --keep 5";
+			};
+		};
 		ssh = {
 			startAgent = true;
 			extraConfig = ''
