@@ -36,7 +36,7 @@
 
 	programs.dconf.enable = true;
 
-	powerManagement.enable = true;
+	powerManagement.powertop.enable = true;
 
 	services = {
 		libinput.enable = true;
