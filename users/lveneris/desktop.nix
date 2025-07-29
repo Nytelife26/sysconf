@@ -85,17 +85,13 @@
 				titlebar = false;
 			};
 			modifier = "Mod1";
-			terminal = "alacritty";
-			input = {
-				"*" = {
-					xkb_layout = "gb";
-					tap = "enabled";
-					natural_scroll = "enabled";
-				};
+			terminal = "! (alacritty msg create-window) && alacritty";
+			input."*" = {
+				xkb_layout = "gb";
+				tap = "enabled";
+				natural_scroll = "enabled";
 			};
-			gaps = {
-				inner = 20;
-			};
+			gaps.inner = 20;
 			startup = [{command = "--no-startup-id ${pkgs.swayalt}/bin/swayalt";}];
 			keybindings =
 				lib.mkOptionDefault {
