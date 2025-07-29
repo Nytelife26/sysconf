@@ -1,8 +1,4 @@
-{
-	inputs,
-	pkgs,
-	...
-}: {
+{pkgs, ...}: {
 	imports = [
 		./cmp.nix
 		./lsp.nix
@@ -14,7 +10,13 @@
 
 		globals.mapleader = " ";
 		colorscheme = "catppuccin-mocha";
-		colorschemes.catppuccin.enable = true;
+		colorschemes.catppuccin = {
+			enable = true;
+			settings = {
+				transparent_background = true;
+				integrations.notify = true;
+			};
+		};
 		# colorschemes.base16 = {
 		# 	enable = true;
 		# 	colorscheme = "catppuccin-mocha";
@@ -26,14 +28,12 @@
 		};
 
 		highlightOverride = {
-			Normal.bg = "none";
-			NormalNC.bg = "none";
 			LineNr = {
-				fg = "lightgrey";
+				fg = "#bac2de";
 				bold = true;
 			};
-			LineNrAbove.fg = "grey";
-			LineNrBelow.fg = "grey";
+			LineNrAbove.fg = "#7f849c";
+			LineNrBelow.fg = "#7f849c";
 		};
 
 		keymaps = [
@@ -61,7 +61,6 @@
 			termguicolors = true;
 			scrolloff = 10;
 
-			smartindent = true;
 			softtabstop = 4;
 			shiftwidth = 4;
 			tabstop = 4;
@@ -87,15 +86,66 @@
 		};
 
 		plugins = {
-			coq-nvim.enable = true;
 			colorizer.enable = true;
-			nvim-autopairs.enable = true;
 			telescope = {
 				enable = true;
 				extensions.fzf-native.enable = true;
 			};
-			treesitter.enable = true;
-			web-devicons.enable = true;
+			treesitter = {
+				enable = true;
+				grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+					nix
+					toml
+					markdown
+					markdown_inline
+					nu
+					typescript
+					json
+					yaml
+					rust
+					vim
+					regex
+					lua
+					bash
+				];
+				settings.indent.enable = true;
+			};
+			nvim-autopairs.enable = true;
+			notify.enable = true;
+			indent-blankline = {
+				enable = true;
+				settings = {
+					indent.char = "▏";
+					scope = {
+						enabled = true;
+						show_start = false;
+						show_end = false;
+					};
+				};
+			};
+			mini = {
+				enable = true;
+				mockDevIcons = true;
+				modules = {
+					icons = {};
+					surround = {};
+				};
+			};
+			gitsigns = {
+				enable = true;
+				settings = {
+					signcolumn = true;
+					signs = {
+						add = {text = "│";};
+						change = {text = "│";};
+						changedelete = {text = "~";};
+						delete = {text = "_";};
+						topdelete = {text = "‾";};
+						untracked = {text = "┆";};
+					};
+					watch_gitdir = {follow_files = true;};
+				};
+			};
 		};
 	};
 }
