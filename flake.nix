@@ -132,11 +132,12 @@
 		devShells =
 			forAllSystems (system: let
 					check = self.checks.${system}.pre-commit-check;
+					pkgs = nixpkgs.legacyPackages.${system};
 				in {
 					default =
 						nixpkgs.legacyPackages.${system}.mkShell {
 							inherit (check) shellHook;
-							buildInputs = check.enabledPackages;
+							buildInputs = check.enabledPackages ++ [pkgs.nil];
 						};
 				});
 	};
