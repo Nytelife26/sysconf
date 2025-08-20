@@ -112,6 +112,7 @@
 			};
 			nvim-autopairs.enable = true;
 			notify.enable = true;
+			todo-comments.enable = true;
 			indent-blankline = {
 				enable = true;
 				settings = {
