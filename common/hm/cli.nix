@@ -18,6 +18,7 @@
 			enable = true;
 			ignores = [
 				".direnv"
+				".envrc"
 			];
 		};
 
