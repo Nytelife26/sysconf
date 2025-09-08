@@ -32,6 +32,7 @@
 		};
 
 		kernelModules = ["kvm-intel"];
+		blacklistedKernelModules = ["ucsi_acpi" "typec_ucsi"];
 		kernelParams = ["quiet" "splash"];
 		extraModulePackages = [];
 	};
