@@ -20,6 +20,7 @@ All systems have one primary administrator: yours truly.
 | `audio`   | Audio configuration via RealtimeKit and [PipeWire]          |
 | `bat`     | Power management setup for battery-powered systems          |
 | `config`  | Main system configuration, including Git and SSH            |
+| `neovim`  | Neovim configuration, requiring [NixVim]                    |
 | `network` | Network configuration via [NetworkManager]                  |
 | `secboot` | (Experimental) Secure boot setup, requiring [Lanzaboote]    |
 | `shell`   | Base and extended suite of command-line tools               |
@@ -28,6 +29,7 @@ All systems have one primary administrator: yours truly.
 | `wm`      | [Wayland] and [SwayFX] configuration, with [swayalt] tiling |
 
 [PipeWire]: https://pipewire.org
+[NixVim]: https://github.com/nix-community/nixvim
 [NeworkManager]: https://networkmanager.dev
 [Lanzaboote]: https://github.com/nix-community/lanzaboote
 [Stylix]: https://github.com/nix-community/stylix
