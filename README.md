@@ -22,6 +22,7 @@ All systems have one primary administrator: yours truly.
 | `config`  | Main system configuration, including Git and SSH            |
 | `neovim`  | Neovim configuration, requiring [NixVim]                    |
 | `network` | Network configuration via [NetworkManager]                  |
+| `openssh` | OpenSSH server configuration, with permissions and keys     |
 | `secboot` | (Experimental) Secure boot setup, requiring [Lanzaboote]    |
 | `shell`   | Base and extended suite of command-line tools               |
 | `style`   | System theming, requiring [Stylix]                          |
