@@ -11,7 +11,7 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		home-manager = {
+		home = {
 			url = "github:nix-community/home-manager/release-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
@@ -47,7 +47,7 @@
 		self,
 		disko,
 		hardware,
-		home-manager,
+		home,
 		hooks,
 		lanzaboote,
 		vim,
@@ -55,72 +55,55 @@
 		nixpkgs,
 		nixpkgs-unstable,
 		...
-	} @ inputs: let
-		lib = nixpkgs.lib // home-manager.lib;
-		inherit (self) outputs;
-
-		systems = [
-			"aarch64-linux"
-			"x86_64-linux"
-		];
-
-		forAllSystems = lib.genAttrs systems;
-
-		mkSystem = host: system: extraModules:
-			lib.nixosSystem {
-				inherit system;
-				specialArgs = {inherit inputs outputs;};
-				modules = extraModules ++ [./hosts/${host}];
-			};
-
-		mkHome = user: system: extraModules:
-			lib.homeManagerConfiguration {
-				pkgs = nixpkgs.legacyPackages.${system};
-				extraSpecialArgs = {inherit inputs outputs;};
-				modules = extraModules ++ [./users/${user}];
-			};
-	in {
-		overlays = import ./overlays {inherit inputs;};
+	} @ inputs: rec {
+		lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
 
 		# `nixos-rebuild switch --flake .#hostname`
-		nixosConfigurations = {
+		nixosConfigurations = let
+			user.name = "lveneris";
+			git = {
+				userName = "nytelife26";
+				userEmail = "xtylerjrx@gmail.com";
+			};
+			extraSpecialArgs.tools = lib;
+		in {
 			lilium-2 =
-				mkSystem "lilium-2" "x86_64-linux"
-				[
-					disko.nixosModules.disko
-					lanzaboote.nixosModules.lanzaboote
-					# This is required because Chromium cannot be configured by home-manager
-					stylix.nixosModules.stylix
-					hardware.nixosModules.common-pc-laptop
-					hardware.nixosModules.common-cpu-intel
-					hardware.nixosModules.common-pc-ssd
-					hardware.nixosModules.asus-battery
-				];
-		};
-
-		# `home-manager switch --flake .#username@hostname`
-		homeConfigurations = {
-			"lveneris@lilium-2" =
-				mkHome "lveneris" "x86_64-linux"
-				[
-					vim.homeManagerModules.nixvim
-					stylix.homeModules.stylix
-				];
+				lib.mkHost {
+					extraModules = [
+						disko.nixosModules.disko
+						lanzaboote.nixosModules.lanzaboote
+						stylix.nixosModules.stylix
+						vim.nixosModules.nixvim
+						hardware.nixosModules.common-pc-laptop
+						hardware.nixosModules.common-cpu-intel
+						hardware.nixosModules.common-pc-ssd
+						hardware.nixosModules.asus-battery
+					];
+					extraOpts = {
+						host.name = "lilium-2";
+						user =
+							user
+							// {
+								extraGroups = ["wheel" "audio" "video" "networkmanager"];
+							};
+						git = git // {signing.enable = true;};
+						gh = true;
+						sshAgent = true;
+					};
+					inherit extraSpecialArgs;
+				};
 		};
 
 		checks =
-			forAllSystems (system: let
-					lib = hooks.lib.${system};
+			lib.forAllSystems (system: let
+					hooksLib = hooks.lib.${system};
 				in {
 					pre-commit-check =
-						lib.run {
+						hooksLib.run {
 							src = ./.;
 							hooks = {
 								convco.enable = true;
-								alejandra = {
-									enable = true;
-									package = nixpkgs.legacyPackages.${system}.alejandra;
-								};
+								alejandra.enable = true;
 								statix = {
 									enable = true;
 									settings.ignore = ["/.direnv"];
@@ -130,15 +113,18 @@
 				});
 
 		devShells =
-			forAllSystems (system: let
+			lib.forAllSystems (system: let
 					check = self.checks.${system}.pre-commit-check;
 					pkgs = nixpkgs.legacyPackages.${system};
 				in {
 					default =
-						nixpkgs.legacyPackages.${system}.mkShell {
+						pkgs.mkShell {
 							inherit (check) shellHook;
 							buildInputs = check.enabledPackages ++ [pkgs.nil];
 						};
 				});
+
+		formatter =
+			lib.forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 	};
 }
