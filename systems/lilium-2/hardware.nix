@@ -24,7 +24,6 @@
 				"usb_storage"
 				"sd_mod"
 				"cryptd"
-				"tpm"
 				"btrfs"
 			];
 			kernelModules = [];
