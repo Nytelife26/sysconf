@@ -23,6 +23,7 @@
 		shell = {
 			enable = true;
 			extended = true;
+			useNu = true;
 		};
 		style = true;
 		tpm = true;
