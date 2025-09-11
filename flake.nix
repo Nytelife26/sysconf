@@ -92,6 +92,20 @@
 					};
 					inherit extraSpecialArgs;
 				};
+			sludge =
+				lib.mkHost {
+					extraModules = [
+						disko.nixosModules.disko
+						vim.nixosModules.nixvim
+						hardware.nixosModules.common-pc
+						hardware.nixosModules.common-cpu-amd
+					];
+					extraOpts = {
+						host.name = "sludge";
+						inherit user git;
+					};
+					inherit extraSpecialArgs;
+				};
 		};
 
 		checks =
