@@ -5,6 +5,8 @@
 	tools,
 	...
 }: {
+	imports = [./minsys.nix];
+
 	options.my = {
 		host = {
 			name =
@@ -99,7 +101,6 @@
 						gpg.format = "ssh";
 					};
 			};
-			nano.enable = false;
 			nh = {
 				enable = true;
 				clean = {
@@ -126,22 +127,13 @@
 			inherit (config.my.user) extraGroups;
 		};
 
-		environment.defaultPackages = [];
-		environment.systemPackages = with pkgs;
-			[
-				brightnessctl
-				# Replace as much GNU software as possible
-				(lib.hiPrio pkgs.uutils-coreutils-noprefix)
-				(lib.hiPrio pkgs.uutils-findutils)
-				# Currently disabled - incomplete
-				# (lib.hiPrio pkgs.uutils-diffutils)
-			]
+		environment.systemPackages =
+			[pkgs.brightnessctl]
 			++ (
 				if config.my.neovim.enable
 				then []
 				else [pkgs.neovim]
 			);
-		documentation.nixos.enable = false;
 
 		hm = {
 			programs = {
@@ -177,8 +169,6 @@
 					EDITOR = "nvim";
 					MANPAGER = "nvim +Man!";
 				};
-
-				packages = lib.mkMerge [];
 			};
 		};
 	};

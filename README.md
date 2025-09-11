@@ -20,6 +20,7 @@ All systems have one primary administrator: yours truly.
 | `audio`   | Audio configuration via RealtimeKit and [PipeWire]          |
 | `bat`     | Power management setup for battery-powered systems          |
 | `config`  | Main system configuration, including Git and SSH            |
+| `minsys`  | Minimizing system configuration                             |
 | `neovim`  | Neovim configuration, requiring [NixVim]                    |
 | `network` | Network configuration via [NetworkManager]                  |
 | `openssh` | OpenSSH server configuration, with permissions and keys     |
