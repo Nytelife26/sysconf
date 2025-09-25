@@ -11,7 +11,6 @@ in rec {
 					value = attrs;
 				})
 			keys);
-	enableMany = setMany {enable = true;};
 
 	mkHost = {
 		extraOpts ? {},
