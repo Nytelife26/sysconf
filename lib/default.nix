@@ -12,6 +12,20 @@ in rec {
 				})
 			keys);
 
+	hostMapToHosts = hostMap:
+		builtins.listToAttrs
+		(builtins.concatMap
+			(
+				host:
+					builtins.map
+					(ip: {
+							name = ip;
+							value = [host.name];
+						})
+					(builtins.attrValues host.value)
+			)
+			(lib.attrsToList hostMap));
+
 	mkHost = {
 		extraOpts ? {},
 		extraModules ? [],
