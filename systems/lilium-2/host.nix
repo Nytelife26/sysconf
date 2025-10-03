@@ -4,6 +4,7 @@
 		../../modules/style.nix
 
 		../../modules/network.nix
+		../../modules/openssh.nix
 		../../modules/bat.nix
 		../../modules/tpm.nix
 		../../modules/secboot.nix
@@ -19,6 +20,7 @@
 		audio = true;
 		battery = true;
 		networking = true;
+		openssh.enable = true;
 		secboot = true;
 		shell = {
 			enable = true;

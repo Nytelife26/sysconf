@@ -2,6 +2,7 @@
 	lib,
 	pkgs,
 	config,
+	inputs,
 	tools,
 	...
 }: {
@@ -128,7 +129,7 @@
 		};
 
 		environment.systemPackages =
-			[pkgs.brightnessctl]
+			[pkgs.brightnessctl inputs.age.packages.${config.my.host.arch}.default]
 			++ (
 				if config.my.neovim.enable
 				then []

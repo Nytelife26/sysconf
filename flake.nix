@@ -6,6 +6,12 @@
 		nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 		hardware.url = "github:NixOS/nixos-hardware";
 
+		age = {
+			url = "github:ryantm/agenix";
+			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.home-manager.follows = "home";
+		};
+
 		hooks = {
 			url = "github:cachix/git-hooks.nix";
 			inputs.nixpkgs.follows = "nixpkgs";

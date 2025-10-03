@@ -48,6 +48,7 @@ in rec {
 					../systems/${extraOpts.host.name}/host.nix
 					../systems/${extraOpts.host.name}/hardware.nix
 
+					inputs.age.nixosModules.age
 					inputs.home.nixosModules.home-manager
 					{
 						home-manager = {
