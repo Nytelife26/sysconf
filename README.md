@@ -15,24 +15,26 @@ All systems have one primary administrator: yours truly.
 
 ## Modules
 
-| Name      | Description                                                 |
-|:---------:|:------------------------------------------------------------|
-| `audio`   | Audio configuration via RealtimeKit and [PipeWire]          |
-| `bat`     | Power management setup for battery-powered systems          |
-| `config`  | Main system configuration, including Git and SSH            |
-| `minsys`  | Minimizing system configuration                             |
-| `neovim`  | Neovim configuration, requiring [NixVim]                    |
-| `network` | Network configuration via [NetworkManager]                  |
-| `openssh` | OpenSSH server configuration, with permissions and keys     |
-| `secboot` | (Experimental) Secure boot setup, requiring [Lanzaboote]    |
-| `shell`   | Base and extended suite of command-line tools               |
-| `style`   | System theming, requiring [Stylix]                          |
-| `tpm`     | TPM2 support for system security at `initrd`-time           |
-| `wm`      | [Wayland] and [SwayFX] configuration, with [swayalt] tiling |
+| Name         | Description                                                 |
+|:------------:|:------------------------------------------------------------|
+| `audio`      | Audio configuration via RealtimeKit and [PipeWire]          |
+| `bat`        | Power management setup for battery-powered systems          |
+| `config`     | Main system configuration, including Git and SSH            |
+| `minsys`     | Minimizing system configuration                             |
+| `neovim`     | Neovim configuration, requiring [NixVim]                    |
+| `network`    | Network configuration via [NetworkManager]                  |
+| `openssh`    | OpenSSH server configuration, with permissions and keys     |
+| `postmoogle` | Service module for [Postmoogle], a Matrix <-> Email bridge  |
+| `secboot`    | (Experimental) Secure boot setup, requiring [Lanzaboote]    |
+| `shell`      | Base and extended suite of command-line tools               |
+| `style`      | System theming, requiring [Stylix]                          |
+| `tpm`        | TPM2 support for system security at `initrd`-time           |
+| `wm`         | [Wayland] and [SwayFX] configuration, with [swayalt] tiling |
 
 [PipeWire]: https://pipewire.org
 [NixVim]: https://github.com/nix-community/nixvim
 [NeworkManager]: https://networkmanager.dev
+[Postmoogle]: https://github.com/etkecc/postmoogle
 [Lanzaboote]: https://github.com/nix-community/lanzaboote
 [Stylix]: https://github.com/nix-community/stylix
 [Wayland]: https://wayland.freedesktop.org/
