@@ -32,6 +32,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		ooye = {
+			url = "git+https://cgit.rory.gay/nix/OOYE-module.git";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		vim = {
 			url = "github:nix-community/nixvim/nixos-25.05";
 			inputs.nixpkgs.follows = "nixpkgs";
