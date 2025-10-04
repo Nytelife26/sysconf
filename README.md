@@ -17,6 +17,7 @@ All systems have one primary administrator: yours truly.
 
 | Name         | Description                                                 |
 |:------------:|:------------------------------------------------------------|
+| `age`        | Agenix secrets configuration                                |
 | `audio`      | Audio configuration via RealtimeKit and [PipeWire]          |
 | `bat`        | Power management setup for battery-powered systems          |
 | `config`     | Main system configuration, including Git and SSH            |
