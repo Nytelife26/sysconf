@@ -11,7 +11,7 @@
 				map (path: {
 						name = tools.pathName path;
 						value.file = path;
-					}) [tools.dirFiles ".age" ../secrets]
+					}) (tools.dirFiles ".age" ../secrets)
 			);
 	};
 }
