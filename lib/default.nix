@@ -12,6 +12,21 @@ in rec {
 				})
 			keys);
 
+	enumerate = list: lib.zipLists (lib.range 1 (builtins.length list)) list;
+	namedOffsets = list:
+		builtins.listToAttrs (builtins.map (elem: {
+					name = elem.snd;
+					value = elem.fst;
+				}) (enumerate list));
+	containersToHostMap = containers:
+		builtins.mapAttrs (_: value: let
+				final4 = builtins.toString (10 + value);
+				final6 = lib.toLower (lib.toHexString value);
+			in {
+				localAddress = "192.168.1.${final4}";
+				localAddress6 = "fc00::${final6}";
+			}) (namedOffsets containers);
+
 	hostMapToHosts = hostMap:
 		builtins.listToAttrs
 		(builtins.concatMap
