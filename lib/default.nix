@@ -26,6 +26,9 @@ in rec {
 			)
 			(lib.attrsToList hostMap));
 
+	pathName = path: lib.last (builtins.split "/" (toString path));
+	dirFiles = type: dir: lib.filter (lib.hasSuffix type) (lib.filesystem.listFilesRecursive dir);
+
 	mkHost = {
 		extraOpts ? {},
 		extraModules ? [],

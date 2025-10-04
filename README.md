@@ -47,5 +47,11 @@ All systems have one primary administrator: yours truly.
 submitted upstream if applicable, and all credit for the structure and internal
 workings should be directed upstream.
 
+Some library functions and general inspiration has been taken from
+[Henry-Hiles] of [Federated Nexus]'s [`nixos`].
+
 [drainpixie]: https://github.com/drainpixie
 [rin]: https://github.com/drainpixie/rin
+[Henry-Hiles]: https://henryhiles.com
+[Federated Nexus]: https://federated.nexus
+[`nixos`]: https://git.federated.nexus/Henry-Hiles/nixos
