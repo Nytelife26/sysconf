@@ -130,11 +130,7 @@
 
 		environment.systemPackages =
 			[pkgs.brightnessctl inputs.age.packages.${config.my.host.arch}.default]
-			++ (
-				if config.my.neovim.enable
-				then []
-				else [pkgs.neovim]
-			);
+			++ lib.optional (!config.my.neovim.enable) pkgs.neovim;
 
 		hm = {
 			programs = {
