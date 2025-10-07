@@ -133,8 +133,10 @@
 			++ lib.optional (!config.my.neovim.enable) pkgs.neovim;
 
 		hm = {
+			manual.manpages.enable = false;
 			programs = {
 				home-manager.enable = true;
+				man.enable = false;
 				git = {
 					enable = true;
 					inherit (config.my.git) userName userEmail;

@@ -17,12 +17,9 @@
 			];
 		};
 		documentation = {
-			nixos.enable = false;
+			enable = false;
 			man.enable = false;
-			doc.enable = false;
-			info.enable = false;
 		};
-
 		system.stateVersion = "25.05";
 	};
 }
