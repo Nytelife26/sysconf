@@ -73,13 +73,13 @@
 				};
 
 				services =
-					{
-						unclutter.enable = true;
-					}
-					// lib.mkIf config.my.wm.notify {
-						fnott.enable = true;
-						lorri.enableNotifications = true;
-					};
+					lib.mkMerge [
+						{unclutter.enable = true;}
+						(lib.mkIf config.my.wm.notify {
+								fnott.enable = true;
+								lorri.enableNotifications = true;
+							})
+					];
 
 				programs = {
 					alacritty = {
