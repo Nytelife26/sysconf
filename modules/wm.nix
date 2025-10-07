@@ -37,7 +37,6 @@
 						clipman
 						shotman
 						fira-code-symbols
-						swayalt
 					];
 					sessionVariables = {
 						BROWSER = "chromium";
