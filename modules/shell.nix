@@ -26,12 +26,14 @@
 						show_banner = false;
 					};
 					environmentVariables =
-						config.hm.home.sessionVariables
-						// lib.mkIf config.my.sshAgent {
-							SSH_AUTH_SOCK =
-								tools.hm.nushell.mkNushellInline
-								''$"($env.XDG_RUNTIME_DIR)/ssh-agent"'';
-						};
+						lib.mkMerge [
+							config.hm.home.sessionVariables
+							(lib.mkIf config.my.sshAgent {
+									SSH_AUTH_SOCK =
+										tools.hm.nushell.mkNushellInline
+										''$"($env.XDG_RUNTIME_DIR)/ssh-agent"'';
+								})
+						];
 				};
 			}
 			else {
