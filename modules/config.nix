@@ -93,14 +93,14 @@
 			git = {
 				enable = true;
 				config =
-					{
-						init.defaultBranch = "main";
-					}
-					// lib.mkIf config.my.git.signing.enable {
-						commit.gpgSign = true;
-						tag.gpgSign = true;
-						gpg.format = "ssh";
-					};
+					lib.mkMerge [
+						{init.defaultBranch = "main";}
+						(lib.mkIf config.my.git.signing.enable {
+								commit.gpgSign = true;
+								tag.gpgSign = true;
+								gpg.format = "ssh";
+							})
+					];
 			};
 			nh = {
 				enable = true;
