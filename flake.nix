@@ -64,7 +64,6 @@
 		vim,
 		stylix,
 		nixpkgs,
-		nixpkgs-unstable,
 		...
 	} @ inputs: rec {
 		lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
@@ -145,7 +144,7 @@
 					default =
 						pkgs.mkShell {
 							inherit (check) shellHook;
-							buildInputs = check.enabledPackages ++ [pkgs.nil];
+							buildInputs = check.enabledPackages ++ [pkgs.nil pkgs.nixd];
 						};
 				});
 

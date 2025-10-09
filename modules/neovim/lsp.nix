@@ -38,7 +38,9 @@
 							enable = true;
 							package = null;
 						} [
+							"bacon_ls"
 							"basedpyright"
+							"biome"
 							"jsonls"
 							"nil_ls"
 							"nixd"
@@ -46,7 +48,9 @@
 							"ruff"
 							"rust_analyzer"
 							"statix"
+							"svelte"
 							"taplo"
+							"ts_ls"
 						];
 					keymaps = let
 						helpers = config.lib.nixvim;
@@ -117,7 +121,10 @@
 								statix.enable = true;
 							};
 							diagnostics.statix.enable = true;
-							formatting.alejandra.enable = true;
+							formatting = {
+								alejandra.enable = true;
+								biome.enable = true;
+							};
 						};
 					};
 				};
