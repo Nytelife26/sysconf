@@ -73,13 +73,10 @@
 				};
 
 				services =
-					lib.mkMerge [
-						{unclutter.enable = true;}
-						(lib.mkIf config.my.wm.notify {
-								fnott.enable = true;
-								lorri.enableNotifications = true;
-							})
-					];
+					lib.mkIf config.my.wm.notify {
+						fnott.enable = true;
+						lorri.enableNotifications = true;
+					};
 
 				programs = {
 					alacritty = {
@@ -113,6 +110,7 @@
 							tap = "enabled";
 							natural_scroll = "enabled";
 						};
+						seat."*".hide_cursor = "1000";
 						gaps.inner = 20;
 						startup = [{command = "--no-startup-id ${pkgs.swayalt}/bin/swayalt";}];
 						keybindings =
