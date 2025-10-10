@@ -32,12 +32,14 @@
 
 			hm = {
 				home = {
-					packages = with pkgs; [
-						wl-clipboard
-						clipman
-						shotman
-						fira-code-symbols
-					];
+					packages = with pkgs;
+						[
+							wl-clipboard
+							clipman
+							shotman
+							fira-code-symbols
+						]
+						++ lib.optional config.my.wm.notify pkgs.libnotify;
 					sessionVariables = {
 						BROWSER = "chromium";
 						NIXOS_OZONE_WL = 1;
