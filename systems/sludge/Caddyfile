@@ -49,7 +49,9 @@ www.kludgecs.com, kludgecs.com {
 	handle {
 		root /var/www/kludgecs.com
 		try_files {path} {path}/ {path}.html
-		file_server
+		file_server {
+			precompressed
+		}
 	}
 
 	handle_errors {
