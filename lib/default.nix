@@ -18,14 +18,19 @@ in rec {
 					name = elem.snd;
 					value = elem.fst;
 				}) (enumerate list));
-	containersToHostMap = containers:
+	containersToHostMap = {
+		containers,
+		offset4 ? 10,
+		offset6 ? 0,
+	}:
 		builtins.mapAttrs (_: value: let
-				final4 = builtins.toString (10 + value);
-				final6 = lib.toLower (lib.toHexString value);
+				final4 = builtins.toString (offset4 + value);
+				final6 = lib.toLower (lib.toHexString (offset6 + value));
 			in {
 				localAddress = "192.168.1.${final4}";
 				localAddress6 = "fc00::${final6}";
 			}) (namedOffsets containers);
+	concatAttrValues = overrides: builtins.mapAttrs (_: value: value // overrides);
 
 	hostMapToHosts = hostMap:
 		builtins.listToAttrs

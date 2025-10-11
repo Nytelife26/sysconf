@@ -34,6 +34,16 @@ matrix.kludgecs.com {
 	error * "Not found" 404
 }
 
+tam-mockup.kludgecs.com {
+	encode zstd gzip
+
+	handle {
+		root /var/www/tam-mockup
+		try_files {path} {path}/ {path}.html
+		file_server
+	}
+}
+
 www.kludgecs.com, kludgecs.com {
 	encode zstd gzip
 
