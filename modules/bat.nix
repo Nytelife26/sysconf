@@ -17,6 +17,7 @@
 			services = {
 				upower.enable = true;
 				tlp.enable = true;
+				thermald.enable = true;
 			};
 		};
 }
