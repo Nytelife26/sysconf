@@ -82,6 +82,7 @@
 						lib.mkIf config.my.shell.extended {
 							enable = true;
 							${shellOpts.integration} = true;
+							package = pkgs.unstable.carapace;
 						};
 					starship = {
 						enable = true;
