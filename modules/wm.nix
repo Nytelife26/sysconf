@@ -97,6 +97,7 @@
 				wayland.windowManager.sway = {
 					enable = true;
 					systemd.enable = true;
+					xwayland = false;
 					package = pkgs.swayfx;
 					checkConfig = false;
 					config = rec {
@@ -126,6 +127,7 @@
 								"XF86AudioMute" = "exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'";
 								# Misc
 								"${modifier}+Shift+e" = "exec 'swaymsg exit'";
+								"${modifier}+d" = "exec '${pkgs.wmenu}/bin/wmenu-run'";
 							};
 					};
 					extraConfig = ''
