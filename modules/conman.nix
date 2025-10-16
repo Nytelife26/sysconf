@@ -12,6 +12,7 @@ in {
 			lib.mkOption {
 				type = lib.types.nullOr lib.types.path;
 				default = null;
+				description = "The module to import containers from.";
 			};
 		hosts = {
 			withHost = {
@@ -19,32 +20,38 @@ in {
 					lib.mkOption {
 						type = lib.types.nullOr lib.types.str;
 						default = null;
+						description = "The IPv4 address to assign the host side of the interfaces.";
 					};
 				hostAddress6 =
 					lib.mkOption {
 						type = lib.types.nullOr lib.types.str;
 						default = null;
+						description = "The IPv6 address to assign the host side of the interfaces.";
 					};
 			};
 			containers =
 				lib.mkOption {
 					type = lib.types.listOf lib.types.str;
 					default = [];
+					description = "The containers to generate a host map for.";
 				};
 			offset4 =
 				lib.mkOption {
 					type = lib.types.ints.unsigned;
 					default = 0;
+					description = "The offset to begin assigning IPv4 addresses from.";
 				};
 			offset6 =
 				lib.mkOption {
 					type = lib.types.ints.unsigned;
 					default = 0;
+					description = "The offset to begin assigning IPv6 addresses from.";
 				};
 			applyTo =
 				lib.mkOption {
 					type = lib.types.listOf lib.types.str;
 					default = [];
+					description = "The containers to apply the generated hosts file to.";
 				};
 		};
 	};
