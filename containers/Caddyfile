@@ -14,17 +14,13 @@
 }
 
 ooye.kludgecs.com {
-	encode zstd gzip
 	reverse_proxy matrix-ooye:6693
 }
 
 matrix.kludgecs.com {
  	handle /_matrix/* {
- 		encode zstd gzip
-
  		reverse_proxy matrix:6167 {
  			header_up X-Forwarded-Port {http.request.port} 
- 			header_up X-Forwarded-Proto {http.request.scheme} 
  			header_up X-Forwarded-TlsProto {tls_protocol} 
  			header_up X-Forwarded-TlsCipher {tls_cipher} 
  			header_up X-Forwarded-HttpsProto {proto} 
@@ -35,8 +31,6 @@ matrix.kludgecs.com {
 }
 
 tam-mockup.kludgecs.com {
-	encode zstd gzip
-
 	handle {
 		root /var/www/tam-mockup
 		try_files {path} {path}/ {path}.html
@@ -45,8 +39,6 @@ tam-mockup.kludgecs.com {
 }
 
 www.kludgecs.com, kludgecs.com {
-	encode zstd gzip
-
 	handle_path /.well-known/matrix/* {
 		header {
 			Access-Control-Allow-Origin *
