@@ -6,45 +6,31 @@
 	inherit (nixpkgs) lib;
 in rec {
 	setMany = attrs: keys:
-		builtins.listToAttrs (builtins.map (name: {
-					inherit name;
-					value = attrs;
-				})
-			keys);
+		builtins.listToAttrs (builtins.map (name: lib.nameValuePair name attrs) keys);
 
-	enumerate = list: lib.zipLists (lib.range 1 (builtins.length list)) list;
-	namedOffsets = list:
-		builtins.listToAttrs (builtins.map (elem: {
-					name = elem.snd;
-					value = elem.fst;
-				}) (enumerate list));
 	containersToHostMap = {
 		containers,
+		base4 ? "192.168.1.",
+		base6 ? "fc80::",
 		offset4 ? 10,
 		offset6 ? 0,
 	}:
-		builtins.mapAttrs (_: value: let
-				final4 = builtins.toString (offset4 + value);
-				final6 = lib.toLower (lib.toHexString (offset6 + value));
-			in {
-				localAddress = "192.168.1.${final4}";
-				localAddress6 = "fc00::${final6}";
-			}) (namedOffsets containers);
-	concatAttrValues = overrides: builtins.mapAttrs (_: value: value // overrides);
-
+		builtins.listToAttrs (lib.imap (idx: name: let
+					final4 = builtins.toString (offset4 + idx);
+					final6 = lib.toLower (lib.toHexString (offset6 + idx));
+				in
+					lib.nameValuePair name {
+						localAddress = "${base4}${final4}";
+						localAddress6 = "${base6}${final6}";
+					})
+			containers);
 	hostMapToHosts = hostMap:
-		builtins.listToAttrs
-		(builtins.concatMap
-			(
-				host:
-					builtins.map
-					(ip: {
-							name = ip;
-							value = [host.name];
-						})
-					(builtins.attrValues host.value)
-			)
-			(lib.attrsToList hostMap));
+		lib.concatMapAttrs
+		(host: addrs: {
+				${addrs.localAddress} = ["${host}.local" host];
+				${addrs.localAddress6} = ["${host}.local" host];
+			})
+		hostMap;
 
 	pathName = path: lib.last (builtins.split "/" (toString path));
 	dirFiles = type: dir: lib.filter (lib.hasSuffix type) (lib.filesystem.listFilesRecursive dir);
