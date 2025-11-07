@@ -5,8 +5,7 @@
 }: let
 	inherit (nixpkgs) lib;
 in rec {
-	setMany = attrs: keys:
-		builtins.listToAttrs (builtins.map (name: lib.nameValuePair name attrs) keys);
+	setMany = attrs: keys: lib.genAttrs keys (_: attrs);
 
 	containersToHostMap = {
 		containers,
@@ -26,10 +25,7 @@ in rec {
 			containers);
 	hostMapToHosts = hostMap:
 		lib.concatMapAttrs
-		(host: addrs: {
-				${addrs.localAddress} = ["${host}.local" host];
-				${addrs.localAddress6} = ["${host}.local" host];
-			})
+		(host: addrs: setMany ["${host}.local" host] (builtins.attrValues addrs))
 		hostMap;
 
 	pathName = path: lib.last (builtins.split "/" (toString path));
