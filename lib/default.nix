@@ -1,6 +1,7 @@
 {
 	nixpkgs,
 	inputs,
+	self,
 	...
 }: let
 	inherit (nixpkgs) lib;
@@ -79,5 +80,12 @@ in rec {
 		"aarch64-linux"
 		"x86_64-linux"
 	];
-	forAllSystems = lib.genAttrs supportedSystems;
+
+	forAllSystems = f:
+		lib.genAttrs supportedSystems (system:
+				f {
+					inherit system;
+					check = self.checks.${system}.pre-commit-check;
+					pkgs = nixpkgs.legacyPackages.${system};
+				});
 }

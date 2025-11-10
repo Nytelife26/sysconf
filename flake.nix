@@ -66,7 +66,7 @@
 		nixpkgs,
 		...
 	} @ inputs: rec {
-		lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
+		lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs self;});
 
 		# `nixos-rebuild switch --flake .#hostname`
 		nixosConfigurations = let
@@ -119,28 +119,27 @@
 		};
 
 		checks =
-			lib.forAllSystems (system: let
-					hooksLib = hooks.lib.${system};
-				in {
+			lib.forAllSystems ({system, ...}: {
 					pre-commit-check =
-						hooksLib.run {
+						hooks.lib.${system}.run {
 							src = ./.;
-							hooks = {
-								convco.enable = true;
-								alejandra.enable = true;
-								statix = {
-									enable = true;
-									settings.ignore = ["/.direnv"];
-								};
-							};
+							hooks =
+								{
+									statix = {
+										enable = true;
+										settings.ignore = ["/.direnv"];
+									};
+								}
+								// lib.setMany {enable = true;} ["convco" "alejandra"];
 						};
 				});
 
 		devShells =
-			lib.forAllSystems (system: let
-					check = self.checks.${system}.pre-commit-check;
-					pkgs = nixpkgs.legacyPackages.${system};
-				in {
+			lib.forAllSystems ({
+					pkgs,
+					check,
+					...
+				}: {
 					default =
 						pkgs.mkShell {
 							inherit (check) shellHook;
@@ -148,7 +147,6 @@
 						};
 				});
 
-		formatter =
-			lib.forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+		formatter = lib.forAllSystems ({pkgs, ...}: pkgs.alejandra);
 	};
 }
