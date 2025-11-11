@@ -3,8 +3,6 @@
 	homePath,
 	...
 }: {
-	autoStart = true;
-
 	bindMounts = {
 		"/var/www".hostPath = "${homePath}/www";
 		"/var/lib/caddy" = {
@@ -13,6 +11,17 @@
 		};
 		"/etc/ssh/ssh_host_ed25519_key".hostPath = "/etc/ssh/ssh_host_ed25519_key";
 	};
+
+	forwardPorts = [
+		{
+			hostPort = 80;
+			containerPort = 80;
+		}
+		{
+			hostPort = 443;
+			containerPort = 443;
+		}
+	];
 
 	config = {
 		config,

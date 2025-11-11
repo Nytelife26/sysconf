@@ -77,11 +77,14 @@ in {
 								inherit (hostMap.${name}) localAddress localAddress6;
 								config = {
 									imports = [./minsys.nix];
-									services.resolved.enable = true;
-									networking.useHostResolvConf = lib.mkForce false;
+									services.resolved.enable = lib.mkForce true;
+									networking = {
+										inherit hosts;
+										useHostResolvConf = lib.mkForce false;
+										# nameservers = builtins.attrValues hostMap.host;
+									};
 								};
 							}))
-					(lib.genAttrs cfg.hosts.applyTo (_: {config.networking.hosts = hosts;}))
 					(
 						if builtins.isFunction sourceFrom
 						then sourceFrom (args // {inherit homePath hosts hostMap;})

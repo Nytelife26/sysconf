@@ -16,7 +16,7 @@
 					hostAddress = "192.168.1.10";
 					hostAddress6 = "fc00::";
 				};
-				containers = ["matrix" "matrix-ooye" "matrix-postmoogle"];
+				containers = ["caddy" "matrix" "matrix-ooye" "matrix-postmoogle"];
 				offset4 = 10;
 				applyTo = ["caddy"];
 			};
