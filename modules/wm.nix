@@ -107,7 +107,9 @@
 							titlebar = false;
 						};
 						modifier = "Mod1";
-						terminal = "! (alacritty msg create-window) && alacritty";
+						terminal = let
+							alacritty = lib.getExe pkgs.alacritty;
+						in "! (${alacritty} msg create-window) && alacritty";
 						input."*" = {
 							xkb_layout = "gb";
 							tap = "enabled";
@@ -115,7 +117,7 @@
 						};
 						seat."*".hide_cursor = "1000";
 						gaps.inner = 20;
-						startup = [{command = "--no-startup-id ${pkgs.swayalt}/bin/swayalt";}];
+						startup = [{command = "--no-startup-id '${lib.getExe pkgs.swayalt}'";}];
 						keybindings =
 							lib.mkOptionDefault {
 								# Brightness
@@ -127,7 +129,7 @@
 								"XF86AudioMute" = "exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'";
 								# Misc
 								"${modifier}+Shift+e" = "exec 'swaymsg exit'";
-								"${modifier}+d" = "exec '${pkgs.wmenu}/bin/wmenu-run'";
+								"${modifier}+d" = "exec '${lib.getExe' pkgs.wmenu "wmenu-run"}'";
 							};
 					};
 					extraConfig = ''
