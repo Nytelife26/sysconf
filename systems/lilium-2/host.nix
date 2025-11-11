@@ -27,7 +27,7 @@
 			extended = true;
 			useNu = true;
 		};
-		style = true;
+		style.enable = true;
 		tpm = true;
 		wm = {
 			enable = true;
