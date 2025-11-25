@@ -1,24 +1,30 @@
 {
 	imports = [
+		../../modules/conman
 		../../modules/neovim
 
-		../../modules/conman.nix
 		../../modules/openssh.nix
 		../../modules/shell.nix
 	];
 
 	my = {
-		containers = {
+		conman = {
 			enable = true;
-			sourceFrom = ./containers.nix;
 			hosts = {
 				withHost = {
 					hostAddress = "192.168.1.10";
 					hostAddress6 = "fc00::";
 				};
-				containers = ["caddy" "matrix" "matrix-ooye" "matrix-postmoogle"];
 				offset4 = 10;
-				applyTo = ["caddy"];
+			};
+			containers = {
+				caddy = {
+					enable = true;
+					www = "/var/www";
+				};
+				matrix.enable = true;
+				matrix-ooye.enable = true;
+				matrix-postmoogle.enable = true;
 			};
 		};
 		openssh = {
@@ -27,6 +33,42 @@
 			keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOVsjcUps7PpHK/zMl206IpyvRKEqHT3DhdZ+s91Gbqy"];
 		};
 		shell.enable = true;
+	};
+
+	containers.caddy.config.services.caddy.virtualHosts = {
+		"tam-mockup.kludgecs.com".extraConfig = ''
+			handle {
+				root /var/www/tam-mockup
+				try_files {path} {path}/ {path}.html
+				file_server
+			}
+		'';
+		"kludgecs.com" = {
+			serverAliases = ["www.kludgecs.com"];
+			extraConfig = ''
+				handle_path /.well-known/matrix/* {
+					header {
+						Access-Control-Allow-Origin *
+						Content-Type application/json
+					}
+					root /var/www/matrix
+					file_server
+				}
+
+				handle {
+					root /var/www/kludgecs.com
+					try_files {path} {path}/ {path}.html
+					file_server {
+						precompressed
+					}
+				}
+
+				handle_errors {
+					rewrite * /{err.status_code}.html
+					file_server
+				}
+			'';
+		};
 	};
 
 	nix.settings.trusted-users = ["@wheel"];
