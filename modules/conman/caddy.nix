@@ -4,7 +4,7 @@
 	inputs,
 	...
 }: let
-	cfg = config.my.conman.containers;
+	cfg = config.my.conman.containers.caddy;
 in {
 	options.my.conman.containers.caddy = {
 		# TODO: future plans to make cloudflare and secretsFile optional?
@@ -19,7 +19,7 @@ in {
 			hostPath =
 				lib.mkOption {
 					type = lib.types.path;
-					default = cfg.caddy.dataDir.container;
+					default = cfg.dataDir.container;
 				};
 		};
 		apex =
@@ -50,16 +50,16 @@ in {
 	};
 
 	config.containers.caddy =
-		lib.mkIf cfg.caddy.enable {
+		lib.mkIf cfg.enable {
 			bindMounts =
 				{
-					${cfg.caddy.dataDir.container} = {
-						inherit (cfg.caddy.dataDir) hostPath;
+					${cfg.dataDir.container} = {
+						inherit (cfg.dataDir) hostPath;
 						isReadOnly = false;
 					};
 					"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
 				}
-				// lib.optionalAttrs (cfg.caddy.www != null) {${cfg.caddy.www}.isReadOnly = true;};
+				// lib.optionalAttrs (cfg.www != null) {${cfg.www}.isReadOnly = true;};
 			forwardPorts = [
 				{
 					hostPort = 80;
@@ -77,10 +77,10 @@ in {
 			}: {
 				imports = [../age.nix inputs.age.nixosModules.age];
 
-				age.secrets.caddy-env.file = cfg.caddy.secretsFile;
+				age.secrets.caddy-env.file = cfg.secretsFile;
 
 				services.caddy = {
-					dataDir = cfg.caddy.dataDir.container;
+					dataDir = cfg.dataDir.container;
 					enable = true;
 					package =
 						pkgs.caddy.withPlugins {

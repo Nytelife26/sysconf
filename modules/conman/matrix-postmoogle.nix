@@ -4,9 +4,11 @@
 	inputs,
 	...
 }: let
-	cfg = config.my.conman.containers;
+	cfg = config.my.conman.containers.matrix-postmoogle;
+	inherit (config.my.conman) containers;
+	matrixDomain = containers.matrix.targetDomain;
 	caddyOpts =
-		if cfg.caddy.enable
+		if containers.caddy.enable
 		then {
 			postmoogleUser = {
 				user = "caddy";
@@ -20,16 +22,14 @@
 				};
 				groups.caddy.gid = config.ids.gids.caddy;
 			};
-			tls = let
-				matrixDomain = cfg.matrix.targetDomain;
-			in {
+			tls = {
 				POSTMOOGLE_TLS_REQUIRED = "1";
-				POSTMOOGLE_TLS_CERT = "/var/lib/certs/${matrixDomain}/${matrixDomain}.crt";
-				POSTMOOGLE_TLS_KEY = "/var/lib/certs/${matrixDomain}/${matrixDomain}.key";
+				POSTMOOGLE_TLS_CERT = "/var/lib/certs/${matrixDomain}.crt";
+				POSTMOOGLE_TLS_KEY = "/var/lib/certs/${matrixDomain}.key";
 			};
 			# TODO: make this more robust - caddy also uses ZeroSSL, or other endpoints
 			# see services.caddy.acmeCA
-			tlsMount."/var/lib/certs".hostPath = "${cfg.caddy.dataDir.hostPath}/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory";
+			tlsMount."/var/lib/certs".hostPath = "${containers.caddy.dataDir.hostPath}/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/${matrixDomain}";
 		}
 		else {
 			postmoogleUser = {};
@@ -50,7 +50,7 @@ in {
 			hostPath =
 				lib.mkOption {
 					type = lib.types.path;
-					default = cfg.matrix-postmoogle.dataDir.container;
+					default = cfg.dataDir.container;
 				};
 		};
 		secretsFile =
@@ -61,10 +61,10 @@ in {
 	};
 
 	config =
-		lib.mkIf cfg.matrix-postmoogle.enable {
+		lib.mkIf cfg.enable {
 			assertions = [
 				{
-					assertion = cfg.matrix.enable;
+					assertion = containers.matrix.enable;
 					message = "Container 'matrix-postmoogle' requires container 'matrix'.";
 				}
 			];
@@ -83,8 +83,8 @@ in {
 				bindMounts =
 					{
 						"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
-						${cfg.matrix-postmoogle.dataDir.container} = {
-							inherit (cfg.matrix-postmoogle.dataDir) hostPath;
+						${cfg.dataDir.container} = {
+							inherit (cfg.dataDir) hostPath;
 							isReadOnly = false;
 						};
 					}
@@ -92,7 +92,7 @@ in {
 				config = {config, ...}: {
 					imports = [../postmoogle.nix ../age.nix inputs.age.nixosModules.age];
 
-					age.secrets.mail-secrets.file = cfg.matrix-postmoogle.secretsFile;
+					age.secrets.mail-secrets.file = cfg.secretsFile;
 
 					inherit (caddyOpts) users;
 
@@ -102,11 +102,11 @@ in {
 							environmentFiles = [config.age.secrets.mail-secrets.path];
 							environment =
 								{
-									POSTMOOGLE_HOMESERVER = "https://${cfg.matrix.targetDomain}";
+									POSTMOOGLE_HOMESERVER = "https://${matrixDomain}";
 									POSTMOOGLE_LOGIN = "postmoogle";
-									POSTMOOGLE_DOMAINS = cfg.caddy.apex;
+									POSTMOOGLE_DOMAINS = containers.caddy.apex;
 									POSTMOOGLE_MAILBOXES_ACTIVATION = "notify";
-									POSTMOOGLE_ADMINS = "@${userName}:${cfg.caddy.apex}";
+									POSTMOOGLE_ADMINS = "@${userName}:${containers.caddy.apex}";
 								}
 								// caddyOpts.tls;
 						}

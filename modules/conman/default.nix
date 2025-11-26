@@ -6,11 +6,7 @@
 }: let
 	cfg = config.my.conman;
 	enabled =
-		builtins.attrNames (
-			lib.filterAttrs
-			(_: value: value.enable)
-			config.my.conman.containers
-		);
+		builtins.attrNames (lib.filterAttrs (_: value: value.enable) cfg.containers);
 in {
 	imports = [
 		./caddy.nix

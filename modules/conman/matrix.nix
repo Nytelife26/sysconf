@@ -4,8 +4,9 @@
 	inputs,
 	...
 }: let
-	cfg = config.my.conman.containers;
-	conmanCfg = config.my.conman;
+	cfg = config.my.conman.containers.matrix;
+	inherit (config.my) conman;
+	inherit (config.my.conman) containers;
 in {
 	options.my.conman.containers.matrix = {
 		enable = lib.mkEnableOption "Continuwuity for Matrix.";
@@ -18,23 +19,23 @@ in {
 			hostPath =
 				lib.mkOption {
 					type = lib.types.path;
-					default = cfg.matrix.dataDir.container;
+					default = cfg.dataDir.container;
 				};
 		};
 		targetDomain =
 			lib.mkOption {
 				type = lib.types.nonEmptyStr;
-				default = "matrix.${cfg.caddy.apex}";
+				default = "matrix.${containers.caddy.apex}";
 			};
 	};
 
 	config =
-		lib.mkIf cfg.matrix.enable {
+		lib.mkIf cfg.enable {
 			containers =
 				{
 					matrix = {
-						bindMounts.${cfg.matrix.dataDir.container} = {
-							inherit (cfg.matrix.dataDir) hostPath;
+						bindMounts.${cfg.dataDir.container} = {
+							inherit (cfg.dataDir) hostPath;
 							isReadOnly = false;
 						};
 						config = {pkgs, ...}: {
@@ -44,12 +45,12 @@ in {
 								enable = true;
 								package = pkgs.unstable.matrix-continuwuity;
 								settings.global = {
-									server_name = cfg.caddy.apex;
+									server_name = containers.caddy.apex;
 									allow_registration = false;
 									allow_encryption = true;
 									allow_federation = true;
 									trusted_servers = ["matrix.org" "techncs.de" "maunium.net"];
-									address = builtins.attrValues conmanCfg.hostMap.matrix;
+									address = builtins.attrValues conman.hostMap.matrix;
 								};
 							};
 
@@ -57,8 +58,8 @@ in {
 						};
 					};
 				}
-				// lib.optionalAttrs cfg.caddy.enable {
-					caddy.config.services.caddy.virtualHosts.${cfg.matrix.targetDomain}.extraConfig = ''
+				// lib.optionalAttrs containers.caddy.enable {
+					caddy.config.services.caddy.virtualHosts.${cfg.targetDomain}.extraConfig = ''
 						handle /_matrix/* {
 							reverse_proxy matrix:6167 {
 								header_up X-Forwarded-Port {http.request.port}

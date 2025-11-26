@@ -4,7 +4,8 @@
 	config,
 	...
 }: let
-	cfg = config.my.conman.containers;
+	cfg = config.my.conman.containers.matrix-ooye;
+	inherit (config.my.conman) containers;
 in {
 	options.my.conman.containers.matrix-ooye = {
 		enable = lib.mkEnableOption "OOYE for Matrix<->Discord bridging.";
@@ -17,7 +18,7 @@ in {
 			hostPath =
 				lib.mkOption {
 					type = lib.types.path;
-					default = cfg.matrix-ooye.dataDir.container;
+					default = cfg.dataDir.container;
 				};
 		};
 		secrets = {
@@ -35,15 +36,15 @@ in {
 		targetDomain =
 			lib.mkOption {
 				type = lib.types.nonEmptyStr;
-				default = "ooye.${cfg.caddy.apex}";
+				default = "ooye.${containers.caddy.apex}";
 			};
 	};
 
 	config =
-		lib.mkIf cfg.matrix-ooye.enable {
+		lib.mkIf cfg.enable {
 			assertions = [
 				{
-					assertion = cfg.matrix.enable;
+					assertion = containers.matrix.enable;
 					message = "Container 'matrix-ooye' requires container 'matrix'.";
 				}
 			];
@@ -52,8 +53,8 @@ in {
 					matrix-ooye = {
 						bindMounts = {
 							"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
-							${cfg.matrix-ooye.dataDir.container} = {
-								inherit (cfg.matrix-ooye.dataDir) hostPath;
+							${cfg.dataDir.container} = {
+								inherit (cfg.dataDir) hostPath;
 								isReadOnly = false;
 							};
 						};
@@ -61,25 +62,25 @@ in {
 							imports = [../age.nix inputs.ooye.modules.default inputs.age.nixosModules.age];
 
 							age.secrets = {
-								ooye-token.file = cfg.matrix-ooye.secrets.tokenFile;
-								ooye-secret.file = cfg.matrix-ooye.secrets.clientSecretFile;
+								ooye-token.file = cfg.secrets.tokenFile;
+								ooye-secret.file = cfg.secrets.clientSecretFile;
 							};
 
 							services.matrix-ooye = {
 								enable = true;
-								homeserver = "https://${cfg.matrix.targetDomain}";
-								homeserverName = cfg.caddy.apex;
+								homeserver = "https://${containers.matrix.targetDomain}";
+								homeserverName = containers.caddy.apex;
 								discordTokenPath = config.age.secrets.ooye-token.path;
 								discordClientSecretPath = config.age.secrets.ooye-secret.path;
-								bridgeOrigin = "https://${cfg.matrix-ooye.targetDomain}";
+								bridgeOrigin = "https://${cfg.targetDomain}";
 							};
 
 							networking.firewall.allowedTCPPorts = [6693];
 						};
 					};
 				}
-				// lib.optionalAttrs cfg.caddy.enable {
-					caddy.config.services.caddy.virtualHosts.${cfg.matrix-ooye.targetDomain}.extraConfig = ''
+				// lib.optionalAttrs containers.caddy.enable {
+					caddy.config.services.caddy.virtualHosts.${cfg.targetDomain}.extraConfig = ''
 						reverse_proxy matrix-ooye:6693
 					'';
 				};
