@@ -71,14 +71,8 @@ in {
 			containers.matrix-postmoogle = {
 				additionalCapabilities = ["CAP_NET_ADMIN"];
 				forwardPorts = [
-					{
-						hostPort = 25;
-						containerPort = 25;
-					}
-					{
-						hostPort = 587;
-						containerPort = 587;
-					}
+					{hostPort = 25;}
+					{hostPort = 587;}
 				];
 				bindMounts =
 					{

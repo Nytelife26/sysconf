@@ -61,14 +61,8 @@ in {
 				}
 				// lib.optionalAttrs (cfg.www != null) {${cfg.www}.isReadOnly = true;};
 			forwardPorts = [
-				{
-					hostPort = 80;
-					containerPort = 80;
-				}
-				{
-					hostPort = 443;
-					containerPort = 443;
-				}
+				{hostPort = 80;}
+				{hostPort = 443;}
 			];
 			config = {
 				config,
