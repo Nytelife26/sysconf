@@ -2,7 +2,7 @@
 	description = "nixos config yippee";
 
 	inputs = {
-		nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+		nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 		nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 		hardware.url = "github:NixOS/nixos-hardware";
 
@@ -18,12 +18,12 @@
 		};
 
 		home = {
-			url = "github:nix-community/home-manager/release-25.05";
+			url = "github:nix-community/home-manager/release-25.11";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
 		lanzaboote = {
-			url = "github:nix-community/lanzaboote/v0.4.2";
+			url = "github:nix-community/lanzaboote/v0.4.3";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
@@ -38,12 +38,12 @@
 		};
 
 		vim = {
-			url = "github:nix-community/nixvim/nixos-25.05";
+			url = "github:nix-community/nixvim/nixos-25.11";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
 		stylix = {
-			url = "github:nix-community/stylix/release-25.05";
+			url = "github:nix-community/stylix/release-25.11";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
@@ -71,9 +71,9 @@
 		# `nixos-rebuild switch --flake .#hostname`
 		nixosConfigurations = let
 			user.name = "lveneris";
-			git = {
-				userName = "nytelife26";
-				userEmail = "xtylerjrx@gmail.com";
+			git.user = {
+				name = "nytelife26";
+				email = "xtylerjrx@gmail.com";
 			};
 			extraSpecialArgs.tools = lib;
 		in {
@@ -119,10 +119,15 @@
 		};
 
 		checks =
-			lib.forAllSystems ({system, ...}: {
+			lib.forAllSystems ({
+					pkgs,
+					system,
+					...
+				}: {
 					pre-commit-check =
 						hooks.lib.${system}.run {
 							src = ./.;
+							package = pkgs.prek;
 							hooks =
 								{
 									statix = {

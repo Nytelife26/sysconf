@@ -58,15 +58,17 @@
 				cmp-path.enable = true;
 				lspkind = {
 					enable = true;
-					cmp = {
-						enable = true;
-						ellipsisChar = "…";
-						maxWidth = 15;
-						menu = {
-							nvim_lsp = "[Lang]";
-							path = "[Path]";
-							buffer = "[Buff]";
-							luasnip = "[Snip]";
+					settings = {
+						cmp = {
+							enable = true;
+							ellipsis_char = "…";
+							max_width = 15;
+							menu = {
+								nvim_lsp = "[Lang]";
+								path = "[Path]";
+								buffer = "[Buff]";
+								luasnip = "[Snip]";
+							};
 						};
 					};
 				};

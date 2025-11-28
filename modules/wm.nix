@@ -3,25 +3,28 @@
 	pkgs,
 	lib,
 	...
-}: {
+}: let
+	cfg = config.my.wm;
+in {
 	options.my.wm = {
 		enable = lib.mkEnableOption "window manager configuration.";
 		notify = lib.mkEnableOption "notifications.";
 		portals = {
 			enable = lib.mkEnableOption "XDG portals.";
-			# extraPortals = {
-			# 	type = lib.types.listOf lib.types.package;
-			# 	default = with pkgs; [
-			# 		xdg-desktop-portal-gtk
-			# 		xdg-desktop-portal-wlr
-			# 	];
-			# 	description = "XDG portals to use.";
-			# };
+			extraPortals =
+				lib.mkOption {
+					type = lib.types.listOf lib.types.package;
+					default = with pkgs; [
+						xdg-desktop-portal-gtk
+						xdg-desktop-portal-wlr
+					];
+					description = "XDG portals to use.";
+				};
 		};
 	};
 
 	config =
-		lib.mkIf config.my.wm.enable {
+		lib.mkIf cfg.enable {
 			security.polkit.enable = true;
 
 			programs.dconf.enable = true;
@@ -29,6 +32,8 @@
 			services.libinput.enable = true;
 
 			hardware.graphics.enable = true;
+
+			environment.pathsToLink = lib.optionals cfg.portals.enable ["/share/xdg-desktop-portal" "/share/applications"];
 
 			hm = {
 				home = {
@@ -39,7 +44,7 @@
 							shotman
 							fira-code-symbols
 						]
-						++ lib.optional config.my.wm.notify pkgs.libnotify;
+						++ lib.optional cfg.notify pkgs.libnotify;
 					sessionVariables = {
 						BROWSER = "chromium";
 						NIXOS_OZONE_WL = 1;
@@ -59,24 +64,25 @@
 						videos = "$HOME/vid";
 					};
 
-					portal = let
-						extraPortals = with pkgs; [
-							xdg-desktop-portal-gtk
-							xdg-desktop-portal-wlr
-						];
-					in
-						lib.mkIf config.my.wm.portals.enable {
+					portal =
+						lib.mkIf cfg.portals.enable {
 							enable = true;
 							xdgOpenUsePortal = true;
 
-							inherit extraPortals;
-							configPackages = [pkgs.xdg-desktop-portal] ++ extraPortals;
+							inherit (cfg.portals) extraPortals;
+							configPackages = [pkgs.xdg-desktop-portal] ++ cfg.portals.extraPortals;
 						};
 				};
 
 				services =
-					lib.mkIf config.my.wm.notify {
-						fnott.enable = true;
+					lib.mkIf cfg.notify {
+						fnott = {
+							enable = true;
+							settings.main = {
+								max-timeout = 3;
+								idle-timeout = 10;
+							};
+						};
 						lorri.enableNotifications = true;
 					};
 

@@ -36,18 +36,20 @@
 				};
 		};
 		git = {
-			userName =
-				lib.mkOption {
-					type = lib.types.str;
-					default = "Username";
-					description = "Username for git.";
-				};
-			userEmail =
-				lib.mkOption {
-					type = lib.types.str;
-					default = "at@noreply.me";
-					description = "Email address for git.";
-				};
+			user = {
+				name =
+					lib.mkOption {
+						type = lib.types.str;
+						default = "Username";
+						description = "Username for git.";
+					};
+				email =
+					lib.mkOption {
+						type = lib.types.str;
+						default = "at@noreply.me";
+						description = "Email address for git.";
+					};
+			};
 			signing = {
 				enable = lib.mkEnableOption "Git signing via GPG with SSH.";
 				key =
@@ -93,14 +95,12 @@
 			git = {
 				enable = true;
 				config =
-					lib.mkMerge [
-						{init.defaultBranch = "main";}
-						(lib.mkIf config.my.git.signing.enable {
-								commit.gpgSign = true;
-								tag.gpgSign = true;
-								gpg.format = "ssh";
-							})
-					];
+					{init.defaultBranch = "main";}
+					// lib.optionalAttrs config.my.git.signing.enable {
+						commit.gpgSign = true;
+						tag.gpgSign = true;
+						gpg.format = "ssh";
+					};
 			};
 			nh = {
 				enable = true;
@@ -113,7 +113,7 @@
 				lib.mkIf config.my.sshAgent {
 					startAgent = true;
 					extraConfig = ''
-						AddKeysToAgent yes
+						addKeysToAgent yes
 					'';
 				};
 		};
@@ -139,19 +139,17 @@
 				man.enable = false;
 				git = {
 					enable = true;
-					inherit (config.my.git) userName userEmail;
 					signing =
 						lib.mkIf config.my.git.signing.enable {
 							inherit (config.my.git.signing) key;
 							format = "ssh";
 							signByDefault = true;
 						};
-					extraConfig = {
+					settings = {
 						color.ui = "auto";
 						pull.rebase = true;
+						inherit (config.my.git) user;
 					};
-
-					delta.enable = true;
 				};
 				gh =
 					lib.mkIf config.my.gh {

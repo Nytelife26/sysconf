@@ -36,10 +36,8 @@ in rec {
 		extraOpts ? {},
 		extraModules ? [],
 		extraSpecialArgs ? {},
-		system ? "x86_64-linux",
 	}:
 		lib.nixosSystem {
-			inherit system;
 			specialArgs = {inherit inputs;} // extraSpecialArgs;
 
 			modules =
@@ -48,7 +46,6 @@ in rec {
 					{
 						my = extraOpts;
 						nixpkgs.overlays = import ../overlays {inherit inputs;};
-						system.stateVersion = "25.05";
 					}
 
 					../systems/${extraOpts.host.name}/host.nix
