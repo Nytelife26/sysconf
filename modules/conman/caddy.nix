@@ -34,7 +34,7 @@ in {
 		secretsFile =
 			lib.mkOption {
 				type = lib.types.path;
-				default = ../../secrets/cf-api.age;
+				default = ../../secrets/caddy-secrets.age;
 				description = ''
 					An Age-encrypted {option}`services.caddy.environmentFile`.
 
@@ -78,8 +78,8 @@ in {
 					enable = true;
 					package =
 						pkgs.caddy.withPlugins {
-							plugins = ["github.com/caddy-dns/cloudflare@v0.2.2"];
-							hash = "sha256-ea8PC/+SlPRdEVVF/I3c1CBprlVp1nrumKM5cMwJJ3U=";
+							plugins = ["github.com/caddy-dns/cloudflare@v0.2.2" "github.com/mholt/caddy-l4@v0.0.0-20251203191346-bab5c5a84b9b"];
+							hash = "sha256-s3QufEDfm1Zl9MVG+yyRCpLNbZmFQP1EDvcsRvkALc4=";
 						};
 					environmentFile = config.age.secrets.caddy-env.path;
 					globalConfig = ''

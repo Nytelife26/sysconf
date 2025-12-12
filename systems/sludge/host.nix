@@ -24,7 +24,7 @@
 				};
 				matrix.enable = true;
 				matrix-ooye.enable = true;
-				matrix-postmoogle.enable = true;
+				stalwart.enable = true;
 			};
 		};
 		openssh = {

@@ -12,7 +12,7 @@ in {
 		./caddy.nix
 		./matrix.nix
 		./matrix-ooye.nix
-		./matrix-postmoogle.nix
+		./stalwart.nix
 	];
 
 	options.my.conman = {
