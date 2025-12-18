@@ -9,4 +9,7 @@
 	(final: _: {
 			swayalt = inputs.swayalt.packages.${final.stdenv.hostPlatform.system}.default;
 		})
+	(final: _: {
+			my = import ../pkgs final.pkgs;
+		})
 ]
