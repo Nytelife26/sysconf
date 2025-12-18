@@ -51,15 +51,8 @@ in {
 			containers =
 				{
 					matrix-ooye = {
-						bindMounts = {
-							"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
-							${cfg.dataDir.container} = {
-								inherit (cfg.dataDir) hostPath;
-								isReadOnly = false;
-							};
-						};
 						config = {config, ...}: {
-							imports = [../age.nix inputs.ooye.modules.default inputs.age.nixosModules.age];
+							imports = [inputs.ooye.modules.default];
 
 							age.secrets = {
 								ooye-token.file = cfg.secrets.tokenFile;

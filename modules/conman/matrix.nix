@@ -34,10 +34,6 @@ in {
 			containers =
 				{
 					matrix = {
-						bindMounts.${cfg.dataDir.container} = {
-							inherit (cfg.dataDir) hostPath;
-							isReadOnly = false;
-						};
 						config = {pkgs, ...}: {
 							nixpkgs.overlays = import ../../overlays {inherit inputs;};
 

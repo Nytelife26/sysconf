@@ -2,11 +2,13 @@
 	lib,
 	config,
 	tools,
+	inputs,
 	...
 }: let
 	cfg = config.my.conman;
 	enabled =
 		builtins.attrNames (lib.filterAttrs (_: value: value.enable) cfg.containers);
+	hasSecrets = name: cfg.containers.${name} ? secrets || cfg.containers.${name} ? secretsFile;
 in {
 	imports = [
 		./caddy.nix
@@ -72,8 +74,19 @@ in {
 						privateNetwork = true;
 						inherit (cfg.hostMap.host) hostAddress hostAddress6;
 						inherit (cfg.hostMap.${name}) localAddress localAddress6;
+						bindMounts =
+							{}
+							// (lib.optionalAttrs (cfg.containers.${name} ? dataDir) {
+									${cfg.containers.${name}.dataDir.container} = {
+										inherit (cfg.containers.${name}.dataDir) hostPath;
+										isReadOnly = false;
+									};
+								})
+							// (lib.optionalAttrs (hasSecrets name) {
+									"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
+								});
 						config = {
-							imports = [../minsys.nix];
+							imports = [../minsys.nix] ++ (lib.optionals (hasSecrets name) [inputs.age.nixosModules.age ../age.nix]);
 							services.resolved.enable = lib.mkForce true;
 							networking = {
 								hosts = cfg.networkHosts;

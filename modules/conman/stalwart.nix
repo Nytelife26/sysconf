@@ -54,11 +54,6 @@ in {
 				{
 					stalwart = {
 						bindMounts = {
-							${cfg.dataDir.container} = {
-								inherit (cfg.dataDir) hostPath;
-								isReadOnly = false;
-							};
-							"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
 							"/var/lib/certs/${cfg.targetDomain}".hostPath = "${certsPath}/${cfg.targetDomain}";
 							"/var/lib/certs/autoconfig.${apexDomain}".hostPath = "${certsPath}/autoconfig.${apexDomain}";
 							"/var/lib/certs/autodiscover.${apexDomain}".hostPath = "${certsPath}/autodiscover.${apexDomain}";
@@ -69,8 +64,6 @@ in {
 							{hostPort = 993;}
 						];
 						config = {config, ...}: {
-							imports = [../age.nix inputs.age.nixosModules.age];
-
 							users = {
 								groups.caddy.gid = config.ids.gids.caddy;
 								users.caddy = {

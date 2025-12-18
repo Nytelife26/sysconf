@@ -1,7 +1,6 @@
 {
 	lib,
 	config,
-	inputs,
 	...
 }: let
 	cfg = config.my.conman.containers.caddy;
@@ -51,15 +50,7 @@ in {
 
 	config.containers.caddy =
 		lib.mkIf cfg.enable {
-			bindMounts =
-				{
-					${cfg.dataDir.container} = {
-						inherit (cfg.dataDir) hostPath;
-						isReadOnly = false;
-					};
-					"/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
-				}
-				// lib.optionalAttrs (cfg.www != null) {${cfg.www}.isReadOnly = true;};
+			bindMounts = lib.optionalAttrs (cfg.www != null) {${cfg.www}.isReadOnly = true;};
 			forwardPorts = [
 				{hostPort = 80;}
 				{hostPort = 443;}
@@ -69,8 +60,6 @@ in {
 				pkgs,
 				...
 			}: {
-				imports = [../age.nix inputs.age.nixosModules.age];
-
 				age.secrets.caddy-env.file = cfg.secretsFile;
 
 				services.caddy = {
