@@ -46,7 +46,7 @@ in {
 						]
 						++ lib.optional cfg.notify pkgs.libnotify;
 					sessionVariables = {
-						BROWSER = "chromium";
+						BROWSER = lib.getExe pkgs.my.helium;
 						NIXOS_OZONE_WL = 1;
 					};
 				};
@@ -97,7 +97,10 @@ in {
 							};
 						};
 					};
-					chromium.enable = true;
+					chromium = {
+						enable = true;
+						package = pkgs.my.helium;
+					};
 				};
 
 				wayland.windowManager.sway = {
