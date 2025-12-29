@@ -2,9 +2,11 @@
 	config,
 	pkgs,
 	lib,
+	tools,
 	...
 }: let
 	cfg = config.my.wm;
+	createHeliumExtension = tools.createChromiumExtensionFor (lib.versions.major pkgs.my.helium.chromiumVersion);
 in {
 	options.my.wm = {
 		enable = lib.mkEnableOption "window manager configuration.";
@@ -100,6 +102,16 @@ in {
 					chromium = {
 						enable = true;
 						package = pkgs.my.helium;
+						# TODO: the following does not yet work for helium
+
+						# extensions = [
+						# 	(createHeliumExtension {
+						# 		# Bitwarden
+						# 		id = "nngceckbapebfimnlniiiahkandclblb";
+						# 		sha256 = "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=";
+						# 		version = "2025.12.0";
+						# 	})
+						# ];
 					};
 				};
 
