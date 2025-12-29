@@ -15,6 +15,7 @@ in {
 		./matrix.nix
 		./matrix-ooye.nix
 		./stalwart.nix
+		./vaultwarden.nix
 	];
 
 	options.my.conman = {

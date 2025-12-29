@@ -25,6 +25,7 @@
 				matrix.enable = true;
 				matrix-ooye.enable = true;
 				stalwart.enable = true;
+				vaultwarden.enable = true;
 			};
 		};
 		openssh = {
