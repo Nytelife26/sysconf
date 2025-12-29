@@ -42,6 +42,7 @@ in
 	stdenv.mkDerivation {
 		pname = "${pname}-bin";
 		inherit version src;
+		chromiumVersion = "143.0.7499.169";
 
 		nativeBuildInputs = [
 			autoPatchelfHook
