@@ -1,7 +1,6 @@
 {
 	config,
 	lib,
-	inputs,
 	...
 }: let
 	cfg = config.my.conman.containers.stalwart;
