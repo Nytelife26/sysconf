@@ -130,11 +130,12 @@ in {
 						modifier = "Mod1";
 						terminal = let
 							alacritty = lib.getExe pkgs.alacritty;
-						in "! (${alacritty} msg create-window) && alacritty";
+						in "! (${alacritty} msg create-window) && ${alacritty}";
 						input."*" = {
 							xkb_layout = "gb";
 							tap = "enabled";
 							natural_scroll = "enabled";
+							drag_lock = "enabled";
 						};
 						seat."*".hide_cursor = "1000";
 						gaps.inner = 20;
