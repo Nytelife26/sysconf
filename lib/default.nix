@@ -32,6 +32,20 @@ in rec {
 	pathName = path: lib.last (builtins.split "/" (toString path));
 	dirFiles = type: dir: lib.filter (lib.hasSuffix type) (lib.filesystem.listFilesRecursive dir);
 
+	createChromiumExtensionFor = browserVersion: {
+		id,
+		sha256,
+		version,
+	}: {
+		inherit id version;
+		crxPath =
+			builtins.fetchurl {
+				url = "https://clients2.google.com/service/update2/crx?response=redirect&acceptFormat=crx3&prodVersion=${browserVersion}&x=id%3D${id}%26installsource%3Dondemand%26uc";
+				name = "${id}.crx";
+				inherit sha256;
+			};
+	};
+
 	mkHost = {
 		extraOpts ? {},
 		extraModules ? [],
