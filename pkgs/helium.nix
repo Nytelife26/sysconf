@@ -18,16 +18,16 @@
 	commandLineArgs ? "--enable-features=AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL,AcceleratedVideoEncoder,UseOzonePlatform --ozone-platform=wayland --ignore-gpu-blocklist --enable-zero-copy --ozone-platform-hint=wayland",
 }: let
 	pname = "helium";
-	version = "0.7.6.1";
+	version = "0.7.7.1";
 
 	architectures = {
 		x86_64-linux = {
 			arch = "x86_64_linux";
-			sha256 = "sha256-RL0MMsYmcboZt7aq2R/6onLX1bTxlEbhlwB7yBb84os=";
+			sha256 = "sha256-aY9GwIDPTcskm55NluSyxkCHC6drd6BdBaNYZhrzlRE=";
 		};
 		aarch64-linux = {
 			arch = "arm64_linux";
-			sha256 = "sha256-tkqUGCSBcUEpLrAlbJ9AtwjYSwcBchx/p5acBrp6Wrk=";
+			sha256 = "sha256-76hJ19/bHzdE1//keGF9imYkMHOy6VHpA56bxEkgwgA=";
 		};
 	};
 
