@@ -14,6 +14,7 @@ in {
 		./caddy.nix
 		./matrix.nix
 		./matrix-ooye.nix
+		./radicle.nix
 		./stalwart.nix
 		./vaultwarden.nix
 	];

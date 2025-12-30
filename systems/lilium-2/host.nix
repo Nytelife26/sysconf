@@ -26,6 +26,7 @@
 			enable = true;
 			extended = true;
 			useNu = true;
+			useRadicle = true;
 		};
 		style.enable = true;
 		tpm = true;

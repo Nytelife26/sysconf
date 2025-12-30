@@ -24,6 +24,10 @@
 				};
 				matrix.enable = true;
 				matrix-ooye.enable = true;
+				radicle = {
+					enable = true;
+					publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJTeuuDFf5N7OUHkbzAMsizQQiKNf47fo/oBAHbXgL5a radicle";
+				};
 				stalwart.enable = true;
 				vaultwarden.enable = true;
 			};

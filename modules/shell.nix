@@ -42,6 +42,7 @@ in {
 		enable = lib.mkEnableOption "a modern suite of CLI tools.";
 		extended = lib.mkEnableOption "the full suite.";
 		useNu = lib.mkEnableOption "Nu as the default shell.";
+		useRadicle = lib.mkEnableOption "Radicle integration.";
 	};
 
 	config =
@@ -74,6 +75,7 @@ in {
 							".envrc"
 						];
 					};
+					radicle.enable = cfg.useRadicle;
 
 					bottom.enable = true;
 					ripgrep.enable = cfg.extended;
