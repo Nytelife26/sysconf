@@ -38,6 +38,13 @@ in {
 			lib.mkOption {
 				type = lib.types.nonEmptyStr;
 			};
+
+		pinned =
+			lib.mkOption {
+				type = lib.types.listOf lib.types.nonEmptyStr;
+				description = "Radicle repositories to pin.";
+				default = [];
+			};
 	};
 
 	config =
@@ -59,6 +66,7 @@ in {
 										listenAddress = "0.0.0.0";
 									};
 									settings = {
+										web.pinned.repositories = cfg.pinned;
 										node = {
 											alias = cfg.targetDomain;
 											externalAddresses = ["${cfg.targetDomain}:8776"];

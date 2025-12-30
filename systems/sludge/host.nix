@@ -27,6 +27,9 @@
 				radicle = {
 					enable = true;
 					publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJTeuuDFf5N7OUHkbzAMsizQQiKNf47fo/oBAHbXgL5a radicle";
+					pinned = [
+						"rad:z4XffkoSXQm372G23d1gGEVMdZv1Z" # proselint
+					];
 				};
 				stalwart.enable = true;
 				vaultwarden.enable = true;
