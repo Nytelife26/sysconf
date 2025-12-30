@@ -47,6 +47,10 @@ in {
 
 	config =
 		lib.mkIf cfg.enable {
+			my.git.signing =
+				lib.optionalAttrs cfg.useRadicle {
+					key = lib.mkDefault "/home/${config.my.user.name}/.radicle/keys/radicle";
+				};
 			users.users.${config.my.user.name}.shell = shellOpts.shell;
 
 			hm = {
