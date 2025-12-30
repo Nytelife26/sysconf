@@ -72,8 +72,8 @@
 		nixosConfigurations = let
 			user.name = "lveneris";
 			git.user = {
-				name = "nytelife26";
-				email = "xtylerjrx@gmail.com";
+				name = "lveneris";
+				email = "tyler@kludgecs.com";
 			};
 			extraSpecialArgs.tools = lib;
 		in {
