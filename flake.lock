@@ -694,15 +694,15 @@
       "locked": {
         "lastModified": 1764351368,
         "narHash": "sha256-vd4/KPij2z+1BILqfIInzCb8jS6HFcxT1A0D7chzRHU=",
-        "owner": "nytelife26",
-        "repo": "swayalt-rs",
+        "ref": "refs/heads/main",
         "rev": "66640b2171955bfcd9fe04cfff190a65f5bdbe76",
-        "type": "github"
+        "revCount": 18,
+        "type": "git",
+        "url": "https://rad.kludgecs.com/z3GvbEBNDHEM6s8jZYWbrvYrvmBxk.git"
       },
       "original": {
-        "owner": "nytelife26",
-        "repo": "swayalt-rs",
-        "type": "github"
+        "type": "git",
+        "url": "https://rad.kludgecs.com/z3GvbEBNDHEM6s8jZYWbrvYrvmBxk.git"
       }
     },
     "systems": {

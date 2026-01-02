@@ -48,7 +48,7 @@
 		};
 
 		swayalt = {
-			url = "github:nytelife26/swayalt-rs";
+			url = "git+https://rad.kludgecs.com/z3GvbEBNDHEM6s8jZYWbrvYrvmBxk.git";
 			inputs.nixpkgs.follows = "nixpkgs";
 			inputs.hooks.follows = "hooks";
 		};
