@@ -1,6 +1,6 @@
 # sysconf
 
-A Nix flake for system configuration.
+A Nix flake for my system configurations.
 
 ## Systems
 
@@ -18,7 +18,7 @@ All systems have one primary administrator: yours truly.
 | Name         | Description                                                 |
 |:------------:|:------------------------------------------------------------|
 | `age`        | Agenix secrets configuration                                |
-| `audio`      | Audio configuration via RealtimeKit and [PipeWire]          |
+| `audio`      | Audio configuration via [RealtimeKit] and [PipeWire]        |
 | `bat`        | Power management setup for battery-powered systems          |
 | `config`     | Main system configuration, including Git and SSH            |
 | `conman`     | Container management system with automatic networking       |
@@ -32,6 +32,7 @@ All systems have one primary administrator: yours truly.
 | `tpm`        | TPM2 support for system security at `initrd`-time           |
 | `wm`         | [Wayland] and [SwayFX] configuration, with [swayalt] tiling |
 
+[RealtimeKit]: https://gitlab.freedesktop.org/pipewire/rtkit
 [PipeWire]: https://pipewire.org
 [NixVim]: https://github.com/nix-community/nixvim
 [NeworkManager]: https://networkmanager.dev
@@ -43,15 +44,15 @@ All systems have one primary administrator: yours truly.
 
 ## Credit
 
-`sysconf` is based entirely on [drainpixie]'s [rin]. All core improvements are
-submitted upstream if applicable, and all credit for the structure and internal
-workings should be directed upstream.
+`sysconf` is based entirely on [drainpixie]'s [keystone]. All core improvements
+are submitted upstream if applicable, and all credit for the structure and
+internal workings should be directed upstream.
 
-Some library functions and general inspiration has been taken from
+Some general inspiration and library functions have been taken from
 [Henry-Hiles] of [Federated Nexus]'s [`nixos`].
 
-[drainpixie]: https://github.com/drainpixie
-[rin]: https://github.com/drainpixie/rin
+[drainpixie]: https://drainpixie.xyz
+[keystone]: https://git.sr.ht/~pixie/keystone
 [Henry-Hiles]: https://henryhiles.com
 [Federated Nexus]: https://federated.nexus
 [`nixos`]: https://git.federated.nexus/Henry-Hiles/nixos
