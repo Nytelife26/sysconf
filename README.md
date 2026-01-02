@@ -26,7 +26,6 @@ All systems have one primary administrator: yours truly.
 | `neovim`     | Neovim configuration, requiring [NixVim]                    |
 | `network`    | Network configuration via [NetworkManager]                  |
 | `openssh`    | OpenSSH server configuration, with permissions and keys     |
-| `postmoogle` | Service module for [Postmoogle], a Matrix <-> Email bridge  |
 | `secboot`    | (Experimental) Secure boot setup, requiring [Lanzaboote]    |
 | `shell`      | Base and extended suite of command-line tools               |
 | `style`      | System theming, requiring [Stylix]                          |
@@ -36,7 +35,6 @@ All systems have one primary administrator: yours truly.
 [PipeWire]: https://pipewire.org
 [NixVim]: https://github.com/nix-community/nixvim
 [NeworkManager]: https://networkmanager.dev
-[Postmoogle]: https://github.com/etkecc/postmoogle
 [Lanzaboote]: https://github.com/nix-community/lanzaboote
 [Stylix]: https://github.com/nix-community/stylix
 [Wayland]: https://wayland.freedesktop.org/
