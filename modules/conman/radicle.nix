@@ -66,7 +66,11 @@ in {
 										listenAddress = "0.0.0.0";
 									};
 									settings = {
-										web.pinned.repositories = cfg.pinned;
+										web = {
+											pinned.repositories = cfg.pinned;
+											description = "Kludge Cyber Systems Ltd. builds practical and reliable IT solutions. Our focus is on simplicity, maintainability, and delivering without overengineering.";
+											avatarUrl = "https://kludgecs.com/short-bow.png";
+										};
 										node = {
 											alias = cfg.targetDomain;
 											externalAddresses = ["${cfg.targetDomain}:8776"];
