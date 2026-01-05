@@ -28,7 +28,13 @@
 					enable = true;
 					publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJTeuuDFf5N7OUHkbzAMsizQQiKNf47fo/oBAHbXgL5a radicle";
 					pinned = [
+						"rad:z2gJsz87p85eSNWV25zXJGgerYhh9" # orgfiles
+						"rad:z2itvcAZn1s9MEgH3hHctgRG8zMDg" # utils
+						"rad:z2kt2m7UybgRhVnkZnEoWewPbawfc" # docile
 						"rad:z4XffkoSXQm372G23d1gGEVMdZv1Z" # proselint
+						"rad:z3HDJ6L2rb912hBeRrTT672DcwJ6m" # relay
+						"rad:zbyNAu4JEEJ9LHRgNMVv3xcPk9Xi" # enumerare
+						"rad:zmK2ZqCZmRbBsbXuwr4DN2FAmxgy" # flussomodoro
 					];
 				};
 				stalwart.enable = true;
