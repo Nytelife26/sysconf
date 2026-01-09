@@ -39,7 +39,7 @@ in {
 
 							services.matrix-continuwuity = {
 								enable = true;
-								package = pkgs.unstable.matrix-continuwuity;
+								package = pkgs.matrix-continuwuity;
 								settings.global = {
 									server_name = containers.caddy.apex;
 									allow_registration = false;
