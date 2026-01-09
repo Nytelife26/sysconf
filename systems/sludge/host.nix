@@ -1,8 +1,16 @@
 {
+	config,
+	lib,
+	pkgs,
+	...
+}: let
+	inherit (config.my.conman) containers;
+in {
 	imports = [
 		../../modules/conman
 		../../modules/neovim
 
+		../../modules/age.nix
 		../../modules/openssh.nix
 		../../modules/shell.nix
 	];
@@ -49,10 +57,40 @@
 		shell.enable = true;
 	};
 
-	services.fail2ban = {
-		enable = true;
-		bantime = "1h";
-		bantime-increment.enable = true;
+	age.secrets = {
+		sludge-store-env.file = ../../secrets/s3-sludge-store-env.age;
+		sludge-store-repo-key.file = ../../secrets/s3-sludge-store-repo-key.age;
+	};
+
+	services = {
+		fail2ban = {
+			enable = true;
+			bantime = "1h";
+			bantime-increment.enable = true;
+		};
+		restic.backups.services = {
+			environmentFile = config.age.secrets.sludge-store-env.path;
+			passwordFile = config.age.secrets.sludge-store-repo-key.path;
+			repository = "s3:s3.de.io.cloud.ovh.net/sludge-store";
+			paths =
+				builtins.map
+				(name: containers.${name}.dataDir.hostPath)
+				(builtins.attrNames
+					(lib.filterAttrs (_: value: value.enable)
+						containers))
+				++ [
+					"/var/lib/fail2ban"
+					"/var/www"
+				];
+			backupPrepareCommand = ''
+				${lib.getExe pkgs.nixos-container} stop matrix
+				${lib.getExe pkgs.nixos-container} stop stalwart
+			'';
+			backupCleanupCommand = ''
+				${lib.getExe pkgs.nixos-container} start matrix
+				${lib.getExe pkgs.nixos-container} start stalwart
+			'';
+		};
 	};
 
 	containers.caddy.config.services.caddy.virtualHosts = {

@@ -56,6 +56,7 @@
 
 	outputs = {
 		self,
+		age,
 		disko,
 		hardware,
 		home,
@@ -109,6 +110,7 @@
 						vim.nixosModules.nixvim
 						hardware.nixosModules.common-pc
 						hardware.nixosModules.common-cpu-amd
+						age.nixosModules.age
 					];
 					extraOpts = {
 						host.name = "sludge";
