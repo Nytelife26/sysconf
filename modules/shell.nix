@@ -71,6 +71,7 @@ in {
 					delta = {
 						enable = true;
 						enableGitIntegration = true;
+						enableJujutsuIntegration = true;
 					};
 					git = {
 						enable = true;
@@ -78,6 +79,10 @@ in {
 							".direnv"
 							".envrc"
 						];
+					};
+					jujutsu = {
+						enable = true;
+						settings = {inherit (config.my.git) user;};
 					};
 					radicle.enable = cfg.useRadicle;
 
