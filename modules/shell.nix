@@ -82,7 +82,17 @@ in {
 					};
 					jujutsu = {
 						enable = true;
-						settings = {inherit (config.my.git) user;};
+						settings =
+							{
+								inherit (config.my.git) user;
+							}
+							// lib.optionalAttrs config.my.git.signing.enable {
+								signing = {
+									behavior = "own";
+									backend = "ssh";
+									inherit (config.my.git.signing) key;
+								};
+							};
 					};
 					radicle.enable = cfg.useRadicle;
 
