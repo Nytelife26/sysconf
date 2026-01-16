@@ -85,6 +85,7 @@ in {
 						settings =
 							{
 								inherit (config.my.git) user;
+								ui.default-command = "status";
 							}
 							// lib.optionalAttrs config.my.git.signing.enable {
 								signing = {
